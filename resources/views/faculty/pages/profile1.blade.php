@@ -90,7 +90,7 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#paper-publications"><b>Paper Publications</b></h3>
-        <div id="paper-publications" class="collapse">
+        <div id="paper-publications" class="">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
@@ -104,19 +104,21 @@
                     @foreach($paper_publications as $paper_publication)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $paper_publication->title }} </b></h4>
-                        <p class="col-sm-12"> <b>Authors</b> : {{ $paper_publication->author_coauthor_names }} </p>
+                        <p class="col-sm-12"> <b>Authors</b> : {{ $paper_publication->author_names }} </p>
+                        <p class="col-sm-12"> <b>Co-authors</b> : {{ $paper_publication->coauthor_names }} </p>
                         <p class="col-sm-12"><b>Publication Date</b> : {{ $paper_publication->dop }} </p>
                         <p class="col-sm-3"><b>Type</b> : {{ $paper_publication->type }} </p>
                         <p class="col-sm-3"><b>Place</b> : {{ $paper_publication->place }} </p>
                         <p class="col-sm-12"><b>DOI</b> : {{ $paper_publication->doi }} </p>
                         <p class="col-sm-12"><b>ISBN/ISSN</b> : {{ $paper_publication->issn_isbn }} </p>
                         <p class="col-sm-12"><b>Link</b> : <a href="{{ $paper_publication->link }}" target="_blank">{{ $paper_publication->link }}</a> </p>
+                        <p class="col-sm-2 col-sm-offset-10 text-right"><a href=" {{ url('/staff/editpaperpublications/'.$paper_publication->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href=" {{ url('/staff/addpaperpublications') }} ">Add New</a>
                 </div>
             </div>
         </div>

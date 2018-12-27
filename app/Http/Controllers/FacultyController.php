@@ -12,6 +12,7 @@ use App\Course_map;
 use App\SubjectAllotment;
 use App\Term;
 use App\CtCC;
+use App\FacultyPaperPublication;
 // use App\Profile_images;
 use File;
 use Illuminate\Support\Facades\URL;
@@ -217,27 +218,29 @@ class FacultyController extends Controller
 
     }
 
-    public function paperpublication(Request $request){
+    public function addpaperpublications(Request $request){
         if(session('e_id')){
-            
-             $paperpublication= new Paper;
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.paper_publication');
+            }
+             $paperpublication= new FacultyPaperPublication;
              $a=implode(',',$_POST['field_name1'] );
              $b=implode(',',$_POST['field_name2'] );
              $paperpublication->title=$request['title'];
              $paperpublication->type=$request['type'];
-             $paperpublication->author_name=$a;
+             $paperpublication->author_names=$a;
              $paperpublication->doi=$request['doi'];
              $paperpublication->issn_isbn=$request['issn_isbn'];
              $paperpublication->dop=$request['dop'];
              $paperpublication->place=$request['place'];
              $paperpublication->link=$request['link'];
              $paperpublication->year=$request['year'];
-             $paperpublication->coauthor_name=$b;
+             $paperpublication->coauthor_names=$b;
              $paperpublication->e_id=$request->session()->get('e_id');
              $paperpublication->is_author=$request['isauthor'];
              $paperpublication->save();
             
-            return redirect('staff/profile');
+            // return redirect('staff/profile');
         }
     }
 
