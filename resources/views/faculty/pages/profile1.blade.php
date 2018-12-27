@@ -95,30 +95,30 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
+                    </select> 
                 </div>
                 <div class="col-sm-12" class="paper-publications-container">
                     @foreach($paper_publications as $paper_publication)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $paper_publication->title }} </b></h4>
-                        <p class="col-sm-12"> <b>Authors</b> : {{ $paper_publication->author_coauthor_names }} </p>
+                        <p class="col-sm-12"> <b>Authors</b> : {{ $paper_publication->author_names }} </p>
+                        <p class="col-sm-12"> <b>Co-authors</b> : {{ $paper_publication->coauthor_names }} </p>
                         <p class="col-sm-12"><b>Publication Date</b> : {{ $paper_publication->dop }} </p>
                         <p class="col-sm-3"><b>Type</b> : {{ $paper_publication->type }} </p>
                         <p class="col-sm-3"><b>Place</b> : {{ $paper_publication->place }} </p>
                         <p class="col-sm-12"><b>DOI</b> : {{ $paper_publication->doi }} </p>
                         <p class="col-sm-12"><b>ISBN/ISSN</b> : {{ $paper_publication->issn_isbn }} </p>
                         <p class="col-sm-12"><b>Link</b> : <a href="{{ $paper_publication->link }}" target="_blank">{{ $paper_publication->link }}</a> </p>
+                        <p class="col-sm-2 col-sm-offset-10 text-right"><a href=" {{ url('/staff/editpaperpublications/'.$paper_publication->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href=" {{ url('/staff/addpaperpublications') }} ">Add New</a>
                 </div>
             </div>
         </div>
@@ -126,16 +126,14 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#courses-conducted"><b>Courses Conducted</b></h3>
-        <div id="courses-conducted" class="">
+        <div id="courses-conducted" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
@@ -162,16 +160,14 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#courses-attended"><b>Courses Attended</b></h3>
-        <div id="courses-attended" class="">
+        <div id="courses-attended" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
@@ -198,16 +194,14 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#patents-details"><b>Patents Details</b></h3>
-        <div id="patents-details" class="">
+        <div id="patents-details" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
@@ -235,16 +229,14 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#activities"><b>Activities</b></h3>
-        <div id="research-grants" class="">
+        <div id="research-grants" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
@@ -266,16 +258,14 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#research-grants"><b>Research Grants</b></h3>
-        <div id="research-grants" class="">
+        <div id="research-grants" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
@@ -299,16 +289,14 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#industry-interaction"><b>Industry Interaction</b></h3>
-        <div id="industry-interaction" class="">
+        <div id="industry-interaction" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
@@ -331,16 +319,14 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#invitations"><b>Invitations</b></h3>
-        <div id="invitations" class="">
+        <div id="invitations" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >

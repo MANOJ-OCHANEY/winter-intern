@@ -2,7 +2,7 @@
 
 @section('section')
 <div class="page-container">
-<form action="{{url('staff/addresearchgrants')}}" method="post">
+<form action="{{url('staff/addresearchgrants')}}" method="post" onsubmit="return validation()">
         {{csrf_field()}}
     <h1>RESEARCH GRANTS</h1>
     <div class="row">
@@ -43,7 +43,7 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label>Grant Amount:</label>
-                <input type="number" name="grant_amount" class ="form-control" placeholder = "Grant amount" required="required">
+                <input type="number" name="grant_amount" class ="form-control" placeholder = "Grant amount" required="required" id="amount">
             </div>             
         </div>
     </div>
@@ -63,4 +63,18 @@
     </div>
     </form> 
 </div>
+<script>
+function validation(){
+    var amount=document.getElementById("amount").value;
+       var regamount=/^[0-9]+$/
+       console.log(contact);
+       if(!contact.match(regcontact)){
+           alert("enter vaild amount");
+           return false;
+       }
+       else{
+           return true;
+       }
+ }
+ </script>
  @endsection

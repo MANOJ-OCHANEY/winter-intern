@@ -3,7 +3,7 @@
 @section('section')
 
 <div class="page-container">
-<form action="{{url('staff/addinvitations')}}" method="post">
+<form action="{{url('staff/addinvitations')}}" method="post" onsubmit="return validation()">
     {{csrf_field()}}
     <h1> INVITATIONS </h1>
     <div class="row">
@@ -59,8 +59,20 @@
             <input type="submit" class="btn btn-primary" value="submit">
         </div>
     </div>
+
+    
     </form>
 </div>
+
+<script>
+
+     
+  function validation()
+  {
+      return false;
+  }     
+
+    </script>
 
 
  @endsection

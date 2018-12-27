@@ -12,7 +12,8 @@ use App\Course_map;
 use App\SubjectAllotment;
 use App\Term;
 use App\CtCC;
-use App\Profile_images;
+use App\FacultyPaperPublication;
+// use App\Profile_images;
 use File;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,6 +41,9 @@ class FacultyController extends Controller
     public function profile(Request $request){
         
         if(session('e_id')){
+            // if ($request->isMethod('get')) {
+            //     return 'get';
+            // }
             $e_id =  $request->session()->get('e_id'); //Later found by auth
             $faculty = Faculty::find($e_id);
             $department = Department::find($faculty->department_id);
@@ -50,6 +54,8 @@ class FacultyController extends Controller
             $invitations = $faculty->invitations;
             $patents = $faculty->patents;
             $research_grants = $faculty->research_grants;
+
+            $academic_years = array('2018-2019','2017-2018','2016-2017','2015-2016');
             // return date("M jS, Y", strtotime($faculty->doj));
             // $current_yr = date('Y');
             // $joining_yr = (int)(explode('-',$faculty->doj)[0]);
@@ -70,7 +76,7 @@ class FacultyController extends Controller
             $profilePic = null;
             // return $profilePic;
             
-            return view('faculty.pages.profile1')->with('staff', $faculty)->with('department',$department)->with('pic', $profilePic)->with('paper_publications',$paper_publications)->with('courses',$courses)->with('activities',$activities)->with('industry_interactions',$industry_interactions)->with('invitations',$invitations)->with('patents',$patents)->with('research_grants',$research_grants);
+            return view('faculty.pages.profile1')->with('staff', $faculty)->with('department',$department)->with('pic', $profilePic)->with('paper_publications',$paper_publications)->with('courses',$courses)->with('activities',$activities)->with('industry_interactions',$industry_interactions)->with('invitations',$invitations)->with('patents',$patents)->with('research_grants',$research_grants)->with('academic_years',$academic_years);
         }
         else{
             return redirect()->back()->with('error','Unauthorised Access');
@@ -212,27 +218,29 @@ class FacultyController extends Controller
 
     }
 
-    public function paperpublication(Request $request){
+    public function addpaperpublications(Request $request){
         if(session('e_id')){
-            
-             $paperpublication= new Paper;
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.paper_publication');
+            }
+             $paperpublication= new FacultyPaperPublication;
              $a=implode(',',$_POST['field_name1'] );
              $b=implode(',',$_POST['field_name2'] );
              $paperpublication->title=$request['title'];
              $paperpublication->type=$request['type'];
-             $paperpublication->author_name=$a;
+             $paperpublication->author_names=$a;
              $paperpublication->doi=$request['doi'];
              $paperpublication->issn_isbn=$request['issn_isbn'];
              $paperpublication->dop=$request['dop'];
              $paperpublication->place=$request['place'];
              $paperpublication->link=$request['link'];
              $paperpublication->year=$request['year'];
-             $paperpublication->coauthor_name=$b;
+             $paperpublication->coauthor_names=$b;
              $paperpublication->e_id=$request->session()->get('e_id');
              $paperpublication->is_author=$request['isauthor'];
              $paperpublication->save();
             
-            return redirect('staff/profile');
+            // return redirect('staff/profile');
         }
     }
 
@@ -273,13 +281,6 @@ class FacultyController extends Controller
             return redirect('staff/profile');
         }
     }
-
-
-
-
-
-
-
 
     public function searchStudent(){
         if(session('e_id')){
@@ -548,8 +549,8 @@ class FacultyController extends Controller
             return redirect()->back()->with('error','Unauthorised Access');
         }
     }
-
-    public function defaulter_list() { 
+      public function defaulter_list() 
+    { 
         if(session('e_id')){
             return view('faculty.classCouncellor.defaulter_list'); 
         }

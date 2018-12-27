@@ -2,7 +2,7 @@
 
 @section('section')
 <div class="page-container">
-<form action="paper/added" method='post'> 
+<form action=" {{ url('/staff/addpaperpublications') }} " method='post'> 
     {{csrf_field()}}
     <h1>Paper Publication</h1>
 
