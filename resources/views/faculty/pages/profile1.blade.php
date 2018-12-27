@@ -11,9 +11,10 @@
         content: '\25bc';
         float: right;
     }
-    /* .collapsible {
-        display: block;
-    } */
+
+    .collapsible {
+        cursor: pointer;
+    }
 </style>
 
 <div class="container-fluid">
@@ -90,17 +91,18 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#paper-publications"><b>Paper Publications</b></h3>
-        <div id="paper-publications" class="">
+        <div id="paper-publications" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
                         @foreach($academic_years as $academic_year)
-                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        <option value="{{ $academic_year }}"> {{ $academic_year }} </option>
                         @endforeach
                     </select> 
                 </div>
                 <div class="col-sm-12" class="paper-publications-container">
+                    @if(count($paper_publications))
                     @foreach($paper_publications as $paper_publication)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $paper_publication->title }} </b></h4>
@@ -112,10 +114,15 @@
                         <p class="col-sm-12"><b>DOI</b> : {{ $paper_publication->doi }} </p>
                         <p class="col-sm-12"><b>ISBN/ISSN</b> : {{ $paper_publication->issn_isbn }} </p>
                         <p class="col-sm-12"><b>Link</b> : <a href="{{ $paper_publication->link }}" target="_blank">{{ $paper_publication->link }}</a> </p>
-                        <p class="col-sm-2 col-sm-offset-10 text-right"><a href=" {{ url('/staff/editpaperpublications/'.$paper_publication->id) }} ">Edit</a></p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editpaperpublications/'.$paper_publication->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
                     <a class="btn btn-primary col-sm-1 col-sm-offset-10" href=" {{ url('/staff/addpaperpublications') }} ">Add New</a>
@@ -137,6 +144,7 @@
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($courses))
                     @foreach($courses as $course)
                     @if($course->conducted_attended == 1)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
@@ -146,13 +154,19 @@
                         <p class="col-sm-3"><b>To</b> : {{ $course->to_date }} </p>
                         <p class="col-sm-4"><b>No of days</b> : {{ $course->no_of_days }} </p>
                         <p class="col-sm-4"><b>Place</b> : {{ $course->place }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endif
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addcourses/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -171,6 +185,7 @@
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($courses))
                     @foreach($courses as $course)
                     @if($course->conducted_attended == 0)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
@@ -180,13 +195,19 @@
                         <p class="col-sm-3"><b>To</b> : {{ $course->to_date }} </p>
                         <p class="col-sm-4"><b>No of days</b> : {{ $course->no_of_days }} </p>
                         <p class="col-sm-4"><b>Place</b> : {{ $course->place }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endif
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addcourses/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -205,6 +226,7 @@
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($patents))
                     @foreach($patents as $patent)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $patent->name }} </b></h4>
@@ -216,12 +238,18 @@
                         <p class="col-sm-4"><b>Application Date</b> : {{ $patent->application_date }} </p>
                         <p class="col-sm-4"><b>Publication Date</b> : {{ $patent->publication_date }} </p>
                         <p class="col-sm-4"><b>Status</b> : {{ $patent->status }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editpatents/'.$patent->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addpatents/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -229,7 +257,7 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#activities"><b>Activities</b></h3>
-        <div id="research-grants" class="collapse">
+        <div id="activities" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
@@ -240,17 +268,24 @@
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($activities))
                     @foreach($activities as $activity)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $activity->title }} </b></h4>
                         <p class="col-sm-12"> <b>Type</b> : {{ $activity->type }} </p>
                         <p class="col-sm-4"><b>Duration</b> :  {{ $activity->duration }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editactivities/'.$activity->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addactivities/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -269,6 +304,7 @@
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($research_grants))
                     @foreach($research_grants as $research_grant)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $research_grant->title }} </b></h4>
@@ -276,12 +312,18 @@
                         <p class="col-sm-12"> <b>Agency</b> : {{ $research_grant->agency }} </p>
                         <p class="col-sm-4"><b>Period</b> : {{ $research_grant->period_from }} to {{ $research_grant->period_to }}</p>
                         <p class="col-sm-4"><b>Grant amount</b> :  {{ $research_grant->grant_amount }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editresearchgrants/'.$research_grant->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addresearchgrants/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -300,18 +342,25 @@
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($industry_interactions))
                     @foreach($industry_interactions as $industry_interaction)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $industry_interaction->title_of_industry_project }} </b></h4>
                         <p class="col-sm-12"> <b>Industry</b> : {{ $industry_interaction->industry_name }} </p>
                         <p class="col-sm-4"><b>Industry Faculty Name</b> : {{ $industry_interaction->faculty_name }} </p>
                         <p class="col-sm-4"><b>Faculty contact</b> : {{ $industry_interaction->industry_contact_person }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editindustryinteractions/'.$industry_interaction->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addindustryinteractions/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -330,6 +379,7 @@
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($invitations))
                     @foreach($invitations as $invitation)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $invitation->title_of_lecture }} </b></h4>
@@ -337,12 +387,18 @@
                         <p class="col-sm-12"> <b>Title of Conference</b> : {{ $invitation->title_of_conference }} </p>
                         <p class="col-sm-4"><b>Organised by</b> : {{ $invitation->organised_by }} </p>
                         <p class="col-sm-4"><b>Type</b> : {{ $invitation->international_national }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editinvitations/'.$invitation->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addinvitations/') }}">Add New</a>
                 </div>
             </div>
         </div>

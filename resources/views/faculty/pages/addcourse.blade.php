@@ -2,48 +2,21 @@
 
 @section('section')
 <div class="page-container">
-<form action="patent/added" method='post'> 
+<form action=" {{ url('/staff/addcourses') }} " method='post'> 
     {{csrf_field()}}
-    <h1>Patent</h1>
+    <h1>Courses</h1>
 
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
-                <label>Patent Name:</label>
+                <label>Name:</label>
                 <input type="text" name="name" class='form-control' placeholder="name" required>
             </div>             
         </div>
         
     </div>
 
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="form-group">
-                <label>Application Number:</label>
-                <input type="text" name="application_number" class='form-control' placeholder="application number" required>
-            </div>             
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="form-group">
-                <label>Patent Inventor name:</label>
-                <input type="text" name="patent_inventor_name" class='form-control' placeholder="inventor name" required>
-            </div>             
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="form-group">
-                <label>Type of User:</label>
-                <input type="text" name="type_of_user" class='form-control' placeholder="username" required>
-            </div>             
-        </div>
-    </div>
-
-    <label>Co Inventor:</label>
+    <label>Course name:</label>
 
     <div class="row">
         <div class="col-sm-3">
@@ -60,8 +33,8 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
-                <label>Status:</label>
-                <input type="text" name="status" class='form-control' placeholder="status" required>
+                <label>Organised By:</label>
+                <input type="text" name="organised_by" class='form-control' placeholder="name" required>
             </div>             
         </div>
     </div>
@@ -69,8 +42,45 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
-                <label>Academic Year:</label>
-                <input type="number" name="year" class='form-control' required>
+                <label>From Date:</label>
+                <input type="date" name="from_date" class='form-control' placeholder="date" required>
+            </div>             
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>To Date:</label>
+                <input type="date" name="to_date" class='form-control' placeholder="date" required>
+            </div>             
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Number of Days:</label>
+                <input type="number" name="no_of_days" class='form-control' placeholder="number of days" required>
+            </div>             
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Place:</label>
+                <input type="text" name="place" class='form-control' placeholder="place" required>
+            </div>             
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Conducted/Attended:</label><br>
+                <input type="radio" name="conducted_attended" class='form-control' value="1">Conducted &nbsp;&nbsp;
+                <input type="radio" name="conducted_attended" class='form-control' value="0">Attended 
             </div>             
         </div>
     </div>

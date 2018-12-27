@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FacultyPaperPublication extends Model
 {
-    protected $table = 'paper_publications';
+    protected $table = 'faculty_paper_publications';
     protected $primaryKey = 'id';
     public $timestamps = false;
 

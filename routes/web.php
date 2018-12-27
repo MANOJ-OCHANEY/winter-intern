@@ -50,19 +50,19 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::get('/addinvitations','FacultyController@addinvitations');
     Route::post('/addinvitations','FacultyController@addinvitations');
     
-    Route::get('/editpaperpublications','FacultyController@editpaperpublications');
+    Route::get('/editpaperpublications/{id}','FacultyController@editpaperpublications');
     Route::post('/editpaperpublications','FacultyController@editpaperpublications');
-    Route::get('/editcourses','FacultyController@editcourses');
+    Route::get('/editcourses/{id}','FacultyController@editcourses');
     Route::post('/editcourses','FacultyController@editcourses');
-    Route::get('/editpatents','FacultyController@editpatents');
+    Route::get('/editpatents/{id}','FacultyController@editpatents');
     Route::post('/editpatents','FacultyController@editpatents');
-    Route::get('/editactivities','FacultyController@editactivities');
+    Route::get('/editactivities/{id}','FacultyController@editactivities');
     Route::post('/editactivities','FacultyController@editactivities');
-    Route::get('/editresearchgrants','FacultyController@editresearchgrants');
+    Route::get('/editresearchgrants/{id}','FacultyController@editresearchgrants');
     Route::post('/editresearchgrants','FacultyController@editresearchgrants');
-    Route::get('/editindustryinteractions','FacultyController@editindustryinteractions');
+    Route::get('/editindustryinteractions/{id}','FacultyController@editindustryinteractions');
     Route::post('/editindustryinteractions','FacultyController@editindustryinteractions');
-    Route::get('/editinvitations','FacultyController@editinvitations');
+    Route::get('/editinvitations/{id}','FacultyController@editinvitations');
     Route::post('/editinvitations','FacultyController@editinvitations');
     
 

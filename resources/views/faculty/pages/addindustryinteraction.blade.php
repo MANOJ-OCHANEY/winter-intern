@@ -2,7 +2,7 @@
 
 @section('section')
 <div class="page-container">    
-<form action="{{url('staff/addindustryinteraction')}}" method="post" id="industryform" onsubmit="return validation()">
+<form action="{{url('staff/addindustryinteractions')}}" method="post" id="industryform" onsubmit="return validation()">
     {{csrf_field()}}
     <h1>INDUSTRY INTERACTION </h1>
     <div class="row">
