@@ -40,6 +40,9 @@ class FacultyController extends Controller
     public function profile(Request $request){
         
         if(session('e_id')){
+            // if ($request->isMethod('get')) {
+            //     return 'get';
+            // }
             $e_id =  $request->session()->get('e_id'); //Later found by auth
             $faculty = Faculty::find($e_id);
             $department = Department::find($faculty->department_id);
@@ -50,6 +53,8 @@ class FacultyController extends Controller
             $invitations = $faculty->invitations;
             $patents = $faculty->patents;
             $research_grants = $faculty->research_grants;
+
+            $academic_years = array('2018-2019','2017-2018','2016-2017','2015-2016');
             // return date("M jS, Y", strtotime($faculty->doj));
             // $current_yr = date('Y');
             // $joining_yr = (int)(explode('-',$faculty->doj)[0]);
@@ -70,7 +75,7 @@ class FacultyController extends Controller
             $profilePic = null;
             // return $profilePic;
             
-            return view('faculty.pages.profile1')->with('staff', $faculty)->with('department',$department)->with('pic', $profilePic)->with('paper_publications',$paper_publications)->with('courses',$courses)->with('activities',$activities)->with('industry_interactions',$industry_interactions)->with('invitations',$invitations)->with('patents',$patents)->with('research_grants',$research_grants);
+            return view('faculty.pages.profile1')->with('staff', $faculty)->with('department',$department)->with('pic', $profilePic)->with('paper_publications',$paper_publications)->with('courses',$courses)->with('activities',$activities)->with('industry_interactions',$industry_interactions)->with('invitations',$invitations)->with('patents',$patents)->with('research_grants',$research_grants)->with('academic_years',$academic_years);
         }
         else{
             return redirect()->back()->with('error','Unauthorised Access');
@@ -273,7 +278,7 @@ class FacultyController extends Controller
             return redirect('staff/profile');
         }
     }
-    
+
     public function searchStudent(){
         if(session('e_id')){
             $term = Input::get('q');
