@@ -41,12 +41,12 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::get('/addresearchgrants','FacultyController@addresearchgrants');
     Route::get('/addindustryinteractions','FacultyController@addinvitations');
     Route::get('/addinvitations','FacultyController@addinvitations');
-    Route::post('/addpaperpublications','FacultyController@addinvitations');
-    Route::post('/addcourses','FacultyController@addinvitations');
-    Route::post('/addpatents','FacultyController@addinvitations');
-    Route::post('/addactivities','FacultyController@addinvitations');
+    Route::post('/addpaperpublications','FacultyController@addpaperpublications');
+    Route::post('/addcourses','FacultyController@addcourses');
+    Route::post('/addpatents','FacultyController@addpatents');
+    Route::post('/addactivities','FacultyController@addactivities');
     Route::post('/addresearchgrants','FacultyController@addresearchgrants');
-    Route::post('/addindustryinteractions','FacultyController@addinvitations');
+    Route::post('/addindustryinteractions','FacultyController@addindustryinteractions');
     Route::post('/addinvitations','FacultyController@addinvitations');
     
 
