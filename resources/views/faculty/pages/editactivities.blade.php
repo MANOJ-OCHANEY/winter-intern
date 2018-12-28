@@ -3,7 +3,7 @@
 @section('section')
 
 <div class="page-container">
-<form action="{{url('staff/editeactivities')}}" method="post">
+<form action="{{url('staff/editactivities')}}" method="post">
     {{csrf_field()}}
     <h1> EDIT ACTIVITIES </h1>
 
