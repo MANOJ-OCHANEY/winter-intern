@@ -108,7 +108,8 @@
                         <h4 class="col-sm-12"><b> {{ $paper_publication->title }} </b></h4>
                         <p class="col-sm-12"> <b>Authors</b> : {{ $paper_publication->author_names }} </p>
                         <p class="col-sm-12"> <b>Co-authors</b> : {{ $paper_publication->coauthor_names }} </p>
-                        <p class="col-sm-12"><b>Publication Date</b> : {{ $paper_publication->dop }} </p>
+                        {{-- <p class="col-sm-12"><b>Publication Date</b> : {{ $paper_publication->dop }} </p> --}}
+                        <p class="col-sm-12"><b>Publication Date</b> : {{ date("M jS, Y", strtotime($paper_publication->dop)) }} </p>
                         <p class="col-sm-3"><b>Type</b> : {{ $paper_publication->type }} </p>
                         <p class="col-sm-3"><b>Place</b> : {{ $paper_publication->place }} </p>
                         <p class="col-sm-12"><b>DOI</b> : {{ $paper_publication->doi }} </p>
