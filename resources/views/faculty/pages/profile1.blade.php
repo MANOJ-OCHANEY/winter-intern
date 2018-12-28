@@ -11,19 +11,26 @@
         content: '\25bc';
         float: right;
     }
-    /* .collapsible {
-        display: block;
-    } */
+
+    .collapsible {
+        cursor: pointer;
+    }
 </style>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3">
             <div style="position: relative">
+                @if($pic !== null)
+                <img src="data:image/png;base64,{{base64_encode($pic->image)}}" style="width:100%;">
+                @else
                 <img class="img-rounded" src="http://zoom.trus.co.id/plugintracker/images/pp-default.jpg" style="width:100%;">
+                @endif
                 {{-- <img class="img-rounded" src="https://gordonswindowdecor.com/wp-content/uploads/sites/23/2015/06/person-placeholder.png" style="width:100%;"> --}}
                 <div style="position: absolute;width: 30px;right: 0;bottom: 0;transform: translate(30%,30%);">
-                    <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/write-circle-blue-512.png" style="width:100%">
+                    <a href="{{ url ('/staff/uploadImage') }}">
+                        <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/write-circle-blue-512.png" style="width:100%">
+                    </a>
                 </div>
             </div>
         </div>
@@ -33,39 +40,44 @@
             <h4><b>Employee Number</b> : {{ $staff->e_id }} </h4>
             <h4><b>Designation</b> : {{ $staff->designation }} </h4>
             <h4><b>Department</b> : {{ $department->dept_name }} </h4>
-            <h4><b>Date of joining</b> : {{ $staff->doj }} </h4>
-            <h4><b>Date of leaving</b> : {{ $staff->dol }} </h4>
+            <h4><b>Date of joining</b> : {{ date("M jS, Y", strtotime($staff->doj)) }} </h4>
+            <h4><b>Date of leaving</b> : {{ date("M jS, Y", strtotime($staff->dol)) }} </h4>
         </div>
     </div>
     <hr>
     <div class="row">
         <h3 class="text-danger"><b>Personal Details</b></h3>
         <div class="col-sm-4">
-            <h4>Contact</h4>
+            <h4><b>Contact</b></h4>
             <h5> {{ $staff->mobile }} </h5>
         </div>
         <div class="col-sm-4">
-            <h4>Date of Birth</h4>
-            <h5> {{ $staff->dob }} </h5>
+            <h4><b>Date of Birth</b></h4>
+            <h5> {{ date("M jS, Y", strtotime($staff->dob)) }} </h5>
         </div>
         <div class="col-sm-4">
-            <h4>Aadhar Number</h4>
+            <h4><b>Aadhar Number</b></h4>
             <h5> {{ $staff->aadhaar_id }} </h5>
         </div>
         <div class="col-sm-4">
-            <h4>Gender</h4>
-            <h5> {{ $staff->gender }} </h5>
+            <h4><b>Gender</b></h4>
+            {{-- <h5> {{ $staff->gender }} </h5> --}}
+            @if($staff->gender == 'M')
+                <h5>MALE</dd>
+            @elseif($staff->gender == 'F')
+                <h5>FEMALE</dd>
+            @endif
         </div>
         <div class="col-sm-4">
-            <h4>Concol Number</h4>
+            <h4><b>Concol Number</b></h4>
             <h5> {{ $staff->concol }} </h5>
         </div>
         <div class="col-sm-4">
-            <h4>PAN Number</h4>
+            <h4><b>PAN Number</b></h4>
             <h5> {{ $staff->pancard }} </h5>
         </div>
         <div class="col-sm-6">
-            <h4>Address</h4>
+            <h4><b>Address</b></h4>
             <h5> {{ $staff->address }} </h5>
         </div>
     </div>
@@ -79,60 +91,42 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#paper-publications"><b>Paper Publications</b></h3>
-        <div id="paper-publications" class="">
+        <div id="paper-publications" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                        @foreach($academic_years as $academic_year)
+                        <option value="{{ $academic_year }}"> {{ $academic_year }} </option>
+                        @endforeach
+                    </select> 
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" class="paper-publications-container">
+                    @if(count($paper_publications))
                     @foreach($paper_publications as $paper_publication)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title of paper Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Authors</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-12">Publication Date : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-3">Type Lorem, ipsum dolor.</p>
-                        <p class="col-sm-3">Place Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-12">DOI Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi facere, eveniet asperiores enim quas eaque dicta quam perspiciatis illo corrupti!</p>
-                        <p class="col-sm-12">ISBN/ISSN Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, beatae!</p>
-                        <p class="col-sm-12">Link Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, alias!</p>
+                        <h4 class="col-sm-12"><b> {{ $paper_publication->title }} </b></h4>
+                        <p class="col-sm-12"> <b>Authors</b> : {{ $paper_publication->author_names }} </p>
+                        <p class="col-sm-12"> <b>Co-authors</b> : {{ $paper_publication->coauthor_names }} </p>
+                        {{-- <p class="col-sm-12"><b>Publication Date</b> : {{ $paper_publication->dop }} </p> --}}
+                        <p class="col-sm-12"><b>Publication Date</b> : {{ date("M jS, Y", strtotime($paper_publication->dop)) }} </p>
+                        <p class="col-sm-3"><b>Type</b> : {{ $paper_publication->type }} </p>
+                        <p class="col-sm-3"><b>Place</b> : {{ $paper_publication->place }} </p>
+                        <p class="col-sm-12"><b>DOI</b> : {{ $paper_publication->doi }} </p>
+                        <p class="col-sm-12"><b>ISBN/ISSN</b> : {{ $paper_publication->issn_isbn }} </p>
+                        <p class="col-sm-12"><b>Link</b> : <a href="{{ $paper_publication->link }}" target="_blank">{{ $paper_publication->link }}</a> </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editpaperpublications/'.$paper_publication->id) }} ">Edit</a></p>
                     </div>
                     <br>
                     @endforeach
-                    <div class="row" style="border: 2px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title of paper Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Authors</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-12">Publication Date : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-3">Type Lorem, ipsum dolor.</p>
-                        <p class="col-sm-3">Place Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-12">DOI Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi facere, eveniet asperiores enim quas eaque dicta quam perspiciatis illo corrupti!</p>
-                        <p class="col-sm-12">ISBN/ISSN Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, beatae!</p>
-                        <p class="col-sm-12">Link Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, alias!</p>
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
                     </div>
-                    <br>  
-                    <div class="row" style="border: 3px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title of paper Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, odit.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Authors</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-12">Publication Date : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-3">Type Lorem, ipsum dolor.</p>
-                        <p class="col-sm-3">Place Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-12">DOI Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi facere, eveniet asperiores enim quas eaque dicta quam perspiciatis illo corrupti!</p>
-                        <p class="col-sm-12">ISBN/ISSN Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, beatae!</p>
-                        <p class="col-sm-12">Link Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, alias!</p>
-                    </div>
+                    @endif
                 </div>
-               
                 <div class="col-sm-12" style="margin-top: 20px;">
-                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="">Add New</a>
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href=" {{ url('/staff/addpaperpublications') }} ">Add New</a>
                 </div>
             </div>
         </div>
@@ -140,45 +134,40 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#courses-conducted"><b>Courses Conducted</b></h3>
-        <div id="courses-conducted" class="">
+        <div id="courses-conducted" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($courses))
+                    @foreach($courses as $course)
+                    @if($course->conducted_attended == 1)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Course Description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-6"> <b>Organized by: </b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-6">Duration : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">No of days Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Place Lorem ipsum dolor sit amet.</p>
+                        <h4 class="col-sm-12"><b> {{ $course->description }} </b></h4>
+                        <p class="col-sm-6"> <b><b>Organized by</b> : </b> {{ $course->organised_by }} </p>
+                        <p class="col-sm-3"><b>From</b> : {{ $course->from_date }} </p>
+                        <p class="col-sm-3"><b>To</b> : {{ $course->to_date }} </p>
+                        <p class="col-sm-4"><b>No of days</b> : {{ $course->no_of_days }} </p>
+                        <p class="col-sm-4"><b>Place</b> : {{ $course->place }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a></p>
                     </div>
                     <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Course Description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-6"> <b>Organized by: </b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-6">Duration : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">No of days Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Place Lorem ipsum dolor sit amet.</p>
+                    @endif
+                    @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
                     </div>
-                    <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Course Description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-6"> <b>Organized by: </b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-6">Duration : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">No of days Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Place Lorem ipsum dolor sit amet.</p>
-                    </div>
+                    @endif
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addcourses/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -186,45 +175,40 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#courses-attended"><b>Courses Attended</b></h3>
-        <div id="courses-attended" class="">
+        <div id="courses-attended" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($courses))
+                    @foreach($courses as $course)
+                    @if($course->conducted_attended == 0)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Course Description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-6"> <b>Organized by: </b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-6">Duration : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">No of days Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Place Lorem ipsum dolor sit amet.</p>
+                        <h4 class="col-sm-12"><b> {{ $course->description }} </b></h4>
+                        <p class="col-sm-6"> <b><b>Organized by</b> : </b> {{ $course->organised_by }} </p>
+                        <p class="col-sm-3"><b>From</b> : {{ $course->from_date }} </p>
+                        <p class="col-sm-3"><b>To</b> : {{ $course->to_date }} </p>
+                        <p class="col-sm-4"><b>No of days</b> : {{ $course->no_of_days }} </p>
+                        <p class="col-sm-4"><b>Place</b> : {{ $course->place }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a></p>
                     </div>
                     <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Course Description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-6"> <b>Organized by: </b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-6">Duration : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">No of days Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Place Lorem ipsum dolor sit amet.</p>
+                    @endif
+                    @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
                     </div>
-                    <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Course Description Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-6"> <b>Organized by: </b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, delectus?</p>
-                        <p class="col-sm-6">Duration : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">No of days Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Place Lorem ipsum dolor sit amet.</p>
-                    </div>
+                    @endif
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addcourses/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -232,56 +216,41 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#patents-details"><b>Patents Details</b></h3>
-        <div id="patents-details" class="">
+        <div id="patents-details" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($patents))
+                    @foreach($patents as $patent)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Name Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
+                        <h4 class="col-sm-12"><b> {{ $patent->name }} </b></h4>
                         {{-- <hr> --}}
-                        <p class="col-sm-5"> <b>Inventor</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-5">Co-inventor : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-5">Application no. Lorem, ipsum dolor.</p>
-                        <p class="col-sm-5">Type Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Appl Date Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Publication Date Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Status Lorem ipsum dolor sit amet.</p>
+                        <p class="col-sm-5"> <b>Inventor</b> : {{ $patent->inventor }} </p>
+                        <p class="col-sm-5"><b>Co-inventor</b> : {{ $patent->coinventors }} </p>
+                        <p class="col-sm-5"><b>Application no.</b> : {{ $patent->application_no }} </p>
+                        <p class="col-sm-5"><b>Type</b> : {{ $patent->type_of_user }} </p>
+                        <p class="col-sm-4"><b>Application Date</b> : {{ $patent->application_date }} </p>
+                        <p class="col-sm-4"><b>Publication Date</b> : {{ $patent->publication_date }} </p>
+                        <p class="col-sm-4"><b>Status</b> : {{ $patent->status }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editpatents/'.$patent->id) }} ">Edit</a></p>
                     </div>
                     <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Name Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-5"> <b>Inventor</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-5">Co-inventor : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-5">Application no. Lorem, ipsum dolor.</p>
-                        <p class="col-sm-5">Type Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Appl Date Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Publication Date Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Status Lorem ipsum dolor sit amet.</p>
+                    @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
                     </div>
-                    <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Name Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-5"> <b>Inventor</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-5">Co-inventor : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-5">Application no. Lorem, ipsum dolor.</p>
-                        <p class="col-sm-5">Type Lorem, ipsum dolor.</p>
-                        <p class="col-sm-4">Appl Date Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Publication Date Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Status Lorem ipsum dolor sit amet.</p>
-                    </div>
-                    <br>
-                    
+                    @endif
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addpatents/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -290,51 +259,72 @@
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#activities"><b>Activities</b></h3>
         <div id="activities" class="collapse">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla delectus accusantium animi laudantium aliquid, voluptates, consequatur placeat, libero a recusandae magni error facilis suscipit cum illo excepturi voluptatem quod modi cumque aliquam praesentium. Iure minus harum mollitia. Harum aliquam eum voluptates, temporibus itaque dignissimos dolorem nesciunt soluta fugiat explicabo delectus dolor, inventore, voluptatem nisi. Officia distinctio placeat facilis ratione itaque incidunt repellendus, fugit saepe? Magni mollitia asperiores id esse minus ipsum dignissimos iusto nam eaque tempore! Inventore expedita sunt nobis facilis dolores enim cum exercitationem delectus accusamus! Obcaecati nesciunt cumque non earum. Dolore, amet eveniet perspiciatis reprehenderit impedit magnam nulla!</p>
+            <div class="col-sm-12">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
+                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-sm-12" >
+                    @if(count($activities))
+                    @foreach($activities as $activity)
+                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                        <h4 class="col-sm-12"><b> {{ $activity->title }} </b></h4>
+                        <p class="col-sm-12"> <b>Type</b> : {{ $activity->type }} </p>
+                        <p class="col-sm-4"><b>Duration</b> :  {{ $activity->duration }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editactivities/'.$activity->id) }} ">Edit</a></p>
+                    </div>
+                    <br>
+                    @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
+                    </div>
+                    @endif
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addactivities/') }}">Add New</a>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#research-grants"><b>Research Grants</b></h3>
-        <div id="research-grants" class="">
+        <div id="research-grants" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($research_grants))
+                    @foreach($research_grants as $research_grant)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
+                        <h4 class="col-sm-12"><b> {{ $research_grant->title }} </b></h4>
                         {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Agency</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Period : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Grant amt. Lorem, ipsum dolor.</p>
+                        <p class="col-sm-12"> <b>Agency</b> : {{ $research_grant->agency }} </p>
+                        <p class="col-sm-4"><b>Period</b> : {{ $research_grant->period_from }} to {{ $research_grant->period_to }}</p>
+                        <p class="col-sm-4"><b>Grant amount</b> :  {{ $research_grant->grant_amount }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editresearchgrants/'.$research_grant->id) }} ">Edit</a></p>
                     </div>
                     <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Agency</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Period : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Grant amt. Lorem, ipsum dolor.</p>
+                    @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
                     </div>
-                    <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Agency</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Period : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Grant amt. Lorem, ipsum dolor.</p>
-                    </div>
-                    <br>
-                    
-                    
+                    @endif
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addresearchgrants/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -342,44 +332,36 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#industry-interaction"><b>Industry Interaction</b></h3>
-        <div id="industry-interaction" class="">
+        <div id="industry-interaction" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($industry_interactions))
+                    @foreach($industry_interactions as $industry_interaction)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Industry</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Faculty name : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Faculty contact. Lorem, ipsum dolor.</p>
+                        <h4 class="col-sm-12"><b> {{ $industry_interaction->title_of_industry_project }} </b></h4>
+                        <p class="col-sm-12"> <b>Industry</b> : {{ $industry_interaction->industry_name }} </p>
+                        <p class="col-sm-4"><b>Industry Faculty Name</b> : {{ $industry_interaction->faculty_name }} </p>
+                        <p class="col-sm-4"><b>Faculty contact</b> : {{ $industry_interaction->industry_contact_person }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editindustryinteractions/'.$industry_interaction->id) }} ">Edit</a></p>
                     </div>
                     <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Industry</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Faculty name : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Faculty contact. Lorem, ipsum dolor.</p>
+                    @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
                     </div>
-                    <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Industry</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Faculty name : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Faculty contact. Lorem, ipsum dolor.</p>
-                    </div>
-                    <br>
-                    
+                    @endif
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addindustryinteractions/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -387,44 +369,37 @@
     <hr>
     <div class="row">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#invitations"><b>Invitations</b></h3>
-        <div id="invitations" class="">
+        <div id="invitations" class="collapse">
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="paper-publications">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($academic_years as $academic_year)
+                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-12" >
+                    @if(count($invitations))
+                    @foreach($invitations as $invitation)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
+                        <h4 class="col-sm-12"><b> {{ $invitation->title_of_lecture }} </b></h4>
                         {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Title of Conference</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Organised by : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Type Lorem, ipsum dolor.</p>
+                        <p class="col-sm-12"> <b>Title of Conference</b> : {{ $invitation->title_of_conference }} </p>
+                        <p class="col-sm-4"><b>Organised by</b> : {{ $invitation->organised_by }} </p>
+                        <p class="col-sm-4"><b>Type</b> : {{ $invitation->international_national }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editinvitations/'.$invitation->id) }} ">Edit</a></p>
                     </div>
                     <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Title of Conference</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Organised by : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Type Lorem, ipsum dolor.</p>
+                    @endforeach
+                    @else
+                    <div class="row">
+                        <h4>No data available yet</h4>
                     </div>
-                    <br>
-                    <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <h4 class="col-sm-12"><b>Title Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora, cupiditate.</b></h4>
-                        {{-- <hr> --}}
-                        <p class="col-sm-12"> <b>Title of Conference</b> Lorem ipsum dolor sit amet co Quasi, delectus?</p>
-                        <p class="col-sm-4">Organised by : Lorem ipsum dolor sit amet.</p>
-                        <p class="col-sm-4">Type Lorem, ipsum dolor.</p>
-                    </div>
-                    <br>
-                    
+                    @endif
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <a class="btn btn-primary col-sm-1 col-sm-offset-10" href="{{ url('/staff/addinvitations/') }}">Add New</a>
                 </div>
             </div>
         </div>
@@ -445,4 +420,3 @@
 </script>
 
 @stop
-
