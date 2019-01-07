@@ -62,19 +62,32 @@ class FacultyController extends Controller
             $patents = $faculty->patents;
             $research_grants = $faculty->research_grants;
 
-            $academic_years = array('2018-2019','2017-2018','2016-2017','2015-2016');
+            $academic_years = array();
             // return date("M jS, Y", strtotime($faculty->doj));
-            // $current_yr = date('Y');
-            // $joining_yr = (int)(explode('-',$faculty->doj)[0]);
-            // // return $current_yr-$joining_yr;
-            // $dt = date('Y-m-d');
-            // $st = $current_yr.'-04-01';
-            // if($dt > $st) {
-
-            // }
-            // else {
-
-            // }
+            $current_yr = date('Y');
+            $joining_yr = (int)(explode('-',$faculty->doj)[0]);
+            // return $current_yr-$joining_yr;
+            $dt = date('Y-m-d');
+            $st = $current_yr.'-07-01';
+            if($dt > $st) {
+                // return 'odd';
+                $count = $current_yr-$joining_yr;
+                for($i = $current_yr; $count >= 0; $i--) {
+                    array_push($academic_years,implode('-',[$i,$i+1]));
+                    $count = $count - 1;
+                }
+                // return $academic_years;
+            }
+            else {
+                // return 'even';
+                $count = $current_yr-$joining_yr-1;
+                // return $count;
+                for($i = $current_yr-1; $count >= 0; $i--) {
+                    array_push($academic_years,implode('-',[$i,$i+1]));
+                    $count = $count - 1;
+                }
+                // return $academic_years;
+            }
                 
             // if()
             // return $courses;

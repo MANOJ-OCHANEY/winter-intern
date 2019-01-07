@@ -309,7 +309,6 @@
                     @foreach($research_grants as $research_grant)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $research_grant->title }} </b></h4>
-                        {{-- <hr> --}}
                         <p class="col-sm-12"> <b>Agency</b> : {{ $research_grant->agency }} </p>
                         <p class="col-sm-4"><b>Period</b> : {{ $research_grant->period_from }} to {{ $research_grant->period_to }}</p>
                         <p class="col-sm-4"><b>Grant amount</b> :  {{ $research_grant->grant_amount }} </p>
@@ -411,12 +410,12 @@
 </div>
 
 <script>
-    // $(document).ready(function() {
-    //     $("[name='year']").on('change',function() {
-    //         alert($(this).data('category'));
-    //         $('#valsel').text($(this).val());
-    //     });
-    // });
+    $(document).ready(function() {
+        $("[name='year']").on('change',function() {
+            alert($(this).data('category'));
+            // $('#valsel').text($(this).val());
+        });
+    });
 </script>
 
 @stop
