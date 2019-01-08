@@ -65,7 +65,10 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::get('/editinvitations/{id}','FacultyController@editinvitations');
     Route::post('/editinvitations','FacultyController@editinvitations');
     
-
+    Route::get('/hodprofile',function(){
+        return view('faculty.pages.hodprofile');
+    });
+    Route::post('/search','FacultyController@hodprofile');
 
     Route::get('/displayindustryinteraction','FacultyController@displayindustryinteraction');
     Route::get('/displayactivities','FacultyController@displayactivities');
