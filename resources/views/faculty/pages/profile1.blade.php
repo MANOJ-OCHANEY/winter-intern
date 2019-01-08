@@ -3,10 +3,6 @@
 @section('section')
 
 <style>
-    /* .row{
-        border: 2px solid green;
-    } */
-
     .collapsible::after{
         content: '\25bc';
         float: right;
@@ -26,7 +22,6 @@
                 @else
                 <img class="img-rounded" src="http://zoom.trus.co.id/plugintracker/images/pp-default.jpg" style="width:100%;">
                 @endif
-                {{-- <img class="img-rounded" src="https://gordonswindowdecor.com/wp-content/uploads/sites/23/2015/06/person-placeholder.png" style="width:100%;"> --}}
                 <div style="position: absolute;width: 30px;right: 0;bottom: 0;transform: translate(30%,30%);">
                     <a href="{{ url ('/staff/uploadImage') }}">
                         <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/write-circle-blue-512.png" style="width:100%">
@@ -61,7 +56,6 @@
         </div>
         <div class="col-sm-4">
             <h4><b>Gender</b></h4>
-            {{-- <h5> {{ $staff->gender }} </h5> --}}
             @if($staff->gender == 'M')
                 <h5>MALE</dd>
             @elseif($staff->gender == 'F')
@@ -101,14 +95,13 @@
                         @endforeach
                     </select> 
                 </div>
-                <div class="col-sm-12" class="paper-publications-container">
+                <div class="col-sm-12" id="paper-publications-container">
                     @if(count($paper_publications))
                     @foreach($paper_publications as $paper_publication)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $paper_publication->title }} </b></h4>
                         <p class="col-sm-12"> <b>Authors</b> : {{ $paper_publication->author_names }} </p>
                         <p class="col-sm-12"> <b>Co-authors</b> : {{ $paper_publication->coauthor_names }} </p>
-                        {{-- <p class="col-sm-12"><b>Publication Date</b> : {{ $paper_publication->dop }} </p> --}}
                         <p class="col-sm-12"><b>Publication Date</b> : {{ date("M jS, Y", strtotime($paper_publication->dop)) }} </p>
                         <p class="col-sm-3"><b>Type</b> : {{ $paper_publication->type }} </p>
                         <p class="col-sm-3"><b>Place</b> : {{ $paper_publication->place }} </p>
@@ -138,20 +131,20 @@
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
-                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                    <select class="col-sm-2" name="year" data-category="courses-conducted">
                         @foreach($academic_years as $academic_year)
                         <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" id="courses-conducted-container">
                     @if(count($courses))
                     @foreach($courses as $course)
                     @if($course->conducted_attended == 1)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $course->description }} </b></h4>
                         <p class="col-sm-6"> <b><b>Organized by</b> : </b> {{ $course->organised_by }} </p>
-                        <p class="col-sm-3"><b>From</b> : {{ $course->from_date }} </p>
+                        <p class="col-sm-3"><b>From</b> : {{ date("M jS, Y", strtotime($course->from_date)) }} </p>
                         <p class="col-sm-3"><b>To</b> : {{ $course->to_date }} </p>
                         <p class="col-sm-4"><b>No of days</b> : {{ $course->no_of_days }} </p>
                         <p class="col-sm-4"><b>Place</b> : {{ $course->place }} </p>
@@ -179,13 +172,13 @@
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
-                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                    <select class="col-sm-2" name="year" data-category="courses-attended">
                         @foreach($academic_years as $academic_year)
                         <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" id="courses-attended-container">
                     @if(count($courses))
                     @foreach($courses as $course)
                     @if($course->conducted_attended == 0)
@@ -220,18 +213,17 @@
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
-                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                    <select class="col-sm-2" name="year" data-category="patents-details">
                         @foreach($academic_years as $academic_year)
                         <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" id="patents-details-container">
                     @if(count($patents))
                     @foreach($patents as $patent)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $patent->name }} </b></h4>
-                        {{-- <hr> --}}
                         <p class="col-sm-5"> <b>Inventor</b> : {{ $patent->inventor }} </p>
                         <p class="col-sm-5"><b>Co-inventor</b> : {{ $patent->coinventors }} </p>
                         <p class="col-sm-5"><b>Application no.</b> : {{ $patent->application_no }} </p>
@@ -262,13 +254,13 @@
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
-                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                    <select class="col-sm-2" name="year" data-category="activities">
                         @foreach($academic_years as $academic_year)
                         <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" id="activities-container">
                     @if(count($activities))
                     @foreach($activities as $activity)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
@@ -298,13 +290,13 @@
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
-                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                    <select class="col-sm-2" name="year" data-category="research-grants">
                         @foreach($academic_years as $academic_year)
                         <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" id="research-grants-container">
                     @if(count($research_grants))
                     @foreach($research_grants as $research_grant)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
@@ -335,13 +327,13 @@
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
-                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                    <select class="col-sm-2" name="year" data-category="industry-interaction">
                         @foreach($academic_years as $academic_year)
                         <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" id="industry-interaction-container">
                     @if(count($industry_interactions))
                     @foreach($industry_interactions as $industry_interaction)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
@@ -372,18 +364,17 @@
             <div class="col-sm-12">
                 <div class="form-group row">
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
-                    <select class="col-sm-2" name="year" data-category="paper-publications">
+                    <select class="col-sm-2" name="year" data-category="invitations">
                         @foreach($academic_years as $academic_year)
                         <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-12" >
+                <div class="col-sm-12" id="invitations-container">
                     @if(count($invitations))
                     @foreach($invitations as $invitation)
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $invitation->title_of_lecture }} </b></h4>
-                        {{-- <hr> --}}
                         <p class="col-sm-12"> <b>Title of Conference</b> : {{ $invitation->title_of_conference }} </p>
                         <p class="col-sm-4"><b>Organised by</b> : {{ $invitation->organised_by }} </p>
                         <p class="col-sm-4"><b>Type</b> : {{ $invitation->international_national }} </p>
@@ -412,8 +403,43 @@
 <script>
     $(document).ready(function() {
         $("[name='year']").on('change',function() {
-            alert($(this).data('category'));
+            // alert($(this).data('category'));
+            // alert($(this).val());
             // $('#valsel').text($(this).val());
+            var category = $(this).data('category'),
+                year = $(this).val();
+                
+            // alert('#' + category);
+            $.ajax({
+                url: '/staff/getyeardata',
+                data: {category: category, year: year},
+                success: function(data) {
+                    data = JSON.parse(data);
+                    $('#' + category).empty();
+                    if(data.length == 0) {
+                        $('#' + category).append('<div class="row"><h4>No data available yet</h4></div>');
+                    }
+                    else if(category == 'paper-publications') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b>` + data[i]['title'] + `</b></h4>
+                                            <p class="col-sm-12"> <b>Authors</b> :` + data[i]['author_names'] + `</p>
+                                            <p class="col-sm-12"> <b>Co-authors</b> :` + data[i]['coauthor_names'] + `</p>
+                                            <p class="col-sm-12"><b>Publication Date</b> :` + data[i]['dop'] + `</p>
+                                            <p class="col-sm-3"><b>Type</b> :` + data[i]['type'] + `</p>
+                                            <p class="col-sm-3"><b>Place</b> :` + data[i]['place'] + `</p>
+                                            <p class="col-sm-12"><b>DOI</b> :` + data[i]['doi'] + `</p>
+                                            <p class="col-sm-12"><b>ISBN/ISSN</b> :` + data[i]['issn_isbn'] + `</p>
+                                            <p class="col-sm-12"><b>Link</b> : <a href="` + data[i]['link'] + `" target="_blank">` + data[i]['link'] + `</a> </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editpaperpublications/` + data[i]['id'] + `">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#fetch-students').append(text);
+                        }
+                    }
+                }
+            });
+
         });
     });
 </script>
