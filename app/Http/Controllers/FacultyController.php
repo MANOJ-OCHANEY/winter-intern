@@ -51,17 +51,10 @@ class FacultyController extends Controller
             // if ($request->isMethod('get')) {
             //     return 'get';
             // }
-            $e_id =  $request->session()->get('e_id'); //Later found by auth
+            $e_id =  $request->session()->get('e_id');
             $faculty = Faculty::find($e_id);
             $department = Department::find($faculty->department_id);
-            $paper_publications = $faculty->paper_publications;
-            $courses = $faculty->courses;
-            $activities = $faculty->activities;
-            $industry_interactions = $faculty->industry_interactions;
-            $invitations = $faculty->invitations;
-            $patents = $faculty->patents;
-            $research_grants = $faculty->research_grants;
-
+            
             $academic_years = array();
             // return date("M jS, Y", strtotime($faculty->doj));
             $current_yr = date('Y');
@@ -88,7 +81,14 @@ class FacultyController extends Controller
                 }
                 // return $academic_years;
             }
-                
+            
+            $paper_publications = $faculty->paper_publications()->where('academic_year',$academic_years[0])->get();
+            $courses = $faculty->courses()->where('academic_year',$academic_years[0])->get();
+            $activities = $faculty->activities()->where('academic_year',$academic_years[0])->get();
+            $industry_interactions = $faculty->industry_interactions()->where('academic_year',$academic_years[0])->get();
+            $invitations = $faculty->invitations()->where('academic_year',$academic_years[0])->get();
+            $patents = $faculty->patents()->where('academic_year',$academic_years[0])->get();
+            $research_grants = $faculty->research_grants()->where('academic_year',$academic_years[0])->get();
             // if()
             // return $courses;
             // return $department;
@@ -457,6 +457,52 @@ class FacultyController extends Controller
             $invitations->save();
             
             return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function getyeardata(Request $request) {
+        if(session('e_id')){
+            $category = $request->input('category');
+            $year = $request->input('year');
+
+            $e_id =  $request->session()->get('e_id');
+            $faculty = Faculty::find($e_id);
+
+            if($category == 'paper-publications') {
+                $paper_publications = $faculty->paper_publications()->where('academic_year',$year)->get()->toJson();
+                return $paper_publications;
+            }
+            else if($category == 'courses-conducted') {
+                $courses = $faculty->courses()->where('academic_year',$year)->where('conducted_attended',1)->get()->toJson();
+                return $courses;
+            }
+            else if($category == 'courses-attended') {
+                $courses = $faculty->courses()->where('academic_year',$year)->where('conducted_attended',0)->get()->toJson();
+                return $courses;
+            }
+            else if($category == 'patents-details') {
+                $patents = $faculty->patents()->where('academic_year',$year)->get()->toJson();
+                return $patents;
+            }
+            else if($category == 'activities') {
+                $activities = $faculty->activities()->where('academic_year',$year)->get()->toJson();
+                return $activities;
+            }
+            else if($category == 'research-grants') {
+                $research_grants = $faculty->research_grants()->where('academic_year',$year)->get()->toJson();
+                return $research_grants;
+            }
+            else if($category == 'industry-interaction') {
+                $industry_interactions = $faculty->industry_interactions()->where('academic_year',$year)->get()->toJson();
+                return $industry_interactions;
+            }
+            else if($category == 'invitations') {
+                $invitations = $faculty->invitations()->where('academic_year',$year)->get()->toJson();
+                return $invitations;
+            }
         }
         else{
             return redirect()->back()->with('error','Unauthorised Access');

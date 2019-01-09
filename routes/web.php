@@ -65,26 +65,7 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::get('/editinvitations/{id}','FacultyController@editinvitations');
     Route::post('/editinvitations','FacultyController@editinvitations');
     
-
-
-    Route::get('/displayindustryinteraction','FacultyController@displayindustryinteraction');
-    Route::get('/displayactivities','FacultyController@displayactivities');
-    Route::post('/addinvitations','FacultyController@addinvitations');
-    Route::post('/addresearchgrants','FacultyController@addresearchgrants');
-    Route::post('/addindustryinteraction','FacultyController@addindustryinteraction');
-    Route::post('/addactivities','FacultyController@addactivities');
-    Route::get('/paper',function(){
-        return view('faculty.pages.paper_publication');
-    });
-    Route::post('/paper/added','FacultyController@paperpublication');
-    Route::get('/course',function(){
-        return view('faculty.pages.course');
-    });
-    Route::post('/course/added','FacultyController@faculty_courses');
-    Route::get('/patent',function(){
-        return view('faculty.pages.patent');
-    });
-    Route::post('/patent/added','FacultyController@faculty_patents');
+    Route::get('/getyeardata','FacultyController@getyeardata');
     //END
     
     Route::get('/attendance/faculty', 'FacultyController@facultyattendance');

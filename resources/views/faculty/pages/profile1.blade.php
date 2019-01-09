@@ -256,7 +256,7 @@
                     <label class="col-sm-2 col-sm-offset-7 text-right">Academic Year</label>
                     <select class="col-sm-2" name="year" data-category="activities">
                         @foreach($academic_years as $academic_year)
-                        <option value=" {{ $academic_year }} "> {{ $academic_year }} </option>
+                        <option value="{{ $academic_year }}"> {{ $academic_year }} </option>
                         @endforeach
                     </select>
                 </div>
@@ -415,9 +415,9 @@
                 data: {category: category, year: year},
                 success: function(data) {
                     data = JSON.parse(data);
-                    $('#' + category).empty();
+                    $('#' + category + '-container').empty();
                     if(data.length == 0) {
-                        $('#' + category).append('<div class="row"><h4>No data available yet</h4></div>');
+                        $('#' + category + '-container').append('<div class="row"><h4>No data available yet</h4></div>');
                     }
                     else if(category == 'paper-publications') {
                         for (var i = 0; i < data.length; i++) {
@@ -434,7 +434,105 @@
                                             <p class="col-sm-12 text-right"><a href="/staff/editpaperpublications/` + data[i]['id'] + `">Edit</a></p>
                                         </div>
                                         <br>`;
-                            $('#fetch-students').append(text);
+                            $('#'+category+'-container').append(text);
+                        }
+                    }
+                    else if(category == 'courses-conducted') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b> ` + data[i]['description'] + ` </b></h4>
+                                            <p class="col-sm-6"> <b><b>Organized by</b> : </b> ` + data[i]['organised_by'] + ` </p>
+                                            <p class="col-sm-3"><b>From</b> : ` + data[i]['from_date'] + ` </p>
+                                            <p class="col-sm-3"><b>To</b> : ` + data[i]['to_date'] + ` </p>
+                                            <p class="col-sm-4"><b>No of days</b> : ` + data[i]['no_of_days'] + ` </p>
+                                            <p class="col-sm-4"><b>Place</b> : ` + data[i]['place'] + ` </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editcourses/` + data[i]['id'] + ` ">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#'+category+'-container').append(text);
+                        }
+                    }
+                    else if(category == 'courses-attended') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b> ` + data[i]['description'] + ` </b></h4>
+                                            <p class="col-sm-6"> <b><b>Organized by</b> : </b> ` + data[i]['organised_by'] + ` </p>
+                                            <p class="col-sm-3"><b>From</b> : ` + data[i]['from_date'] + ` </p>
+                                            <p class="col-sm-3"><b>To</b> : ` + data[i]['to_date'] + ` </p>
+                                            <p class="col-sm-4"><b>No of days</b> : ` + data[i]['no_of_days'] + ` </p>
+                                            <p class="col-sm-4"><b>Place</b> : ` + data[i]['place'] + ` </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editcourses/` + data[i]['id'] + ` ">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#'+category+'-container').append(text);
+                        }
+                    }
+                    else if(category == 'patents-details') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b>` + data[i]['name']  + `</b></h4>
+                                            <p class="col-sm-5"> <b>Inventor</b> :` + data[i]['inventor']  + `</p>
+                                            <p class="col-sm-5"><b>Co-inventor</b> :` + data[i]['coinventors']  + `</p>
+                                            <p class="col-sm-5"><b>Application no.</b> :` + data[i]['application_no']  + `</p>
+                                            <p class="col-sm-5"><b>Type</b> :` + data[i]['type_of_user']  + `</p>
+                                            <p class="col-sm-4"><b>Application Date</b> :` + data[i]['application_date']  + `</p>
+                                            <p class="col-sm-4"><b>Publication Date</b> :` + data[i]['publication_date']  + `</p>
+                                            <p class="col-sm-4"><b>Status</b> :` + data[i]['status']  + `</p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editpatents/` + data[i]['id'] + `">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#'+category+'-container').append(text);
+                        }
+                    }
+                    else if(category == 'activities') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b>` + data[i]['title'] + `</b></h4>
+                                            <p class="col-sm-12"> <b>Type</b> :` + data[i]['type'] + `</p>
+                                            <p class="col-sm-4"><b>Duration</b> : ` + data[i]['duration'] + `</p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editactivities/` + data[i]['id'] + `">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#'+category+'-container').append(text);
+                        }
+                    }
+                    else if(category == 'research-grants') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b>`+ data[i]['title'] +` </b></h4>
+                                            <p class="col-sm-12"> <b>Agency</b> :`+ data[i]['agency'] +` </p>
+                                            <p class="col-sm-4"><b>Period</b> :`+ data[i]['period_from'] +` to`+ data[i]['period_to'] +`</p>
+                                            <p class="col-sm-4"><b>Grant amount</b> : `+ data[i]['grant_amount'] +` </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editresearchgrants/`+data[i]['id']+`">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#'+category+'-container').append(text);
+                        }
+                    }
+                    else if(category == 'industry-interaction') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b>`+ data[i]['title_of_industry_project']+` </b></h4>
+                                            <p class="col-sm-12"> <b>Industry</b> :`+ data[i]['industry_name']+` </p>
+                                            <p class="col-sm-4"><b>Industry Faculty Name</b> :`+ data[i]['faculty_name']+` </p>
+                                            <p class="col-sm-4"><b>Faculty contact</b> :`+ data[i]['industry_contact_person']+` </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editindustryinteractions/`+data[i]['id']+`">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#'+category+'-container').append(text);
+                        }
+                    }
+                    else if(category == 'invitations') {
+                        for (var i = 0; i < data.length; i++) {
+                            var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+                                            <h4 class="col-sm-12"><b>`+ data[i]['title_of_lecture']+` </b></h4>
+                                            <p class="col-sm-12"> <b>Title of Conference</b> :`+ data[i]['title_of_conference']+` </p>
+                                            <p class="col-sm-4"><b>Organised by</b> :`+ data[i]['organised_by']+` </p>
+                                            <p class="col-sm-4"><b>Type</b> :`+ data[i]['international_national']+` </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editinvitations/`+data[i]['id']+`">Edit</a></p>
+                                        </div>
+                                        <br>`;
+                            $('#'+category+'-container').append(text);
                         }
                     }
                 }
