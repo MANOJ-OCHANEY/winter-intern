@@ -58,6 +58,7 @@ class FacultyController extends Controller
             $academic_years = array();
             // return date("M jS, Y", strtotime($faculty->doj));
             $current_yr = date('Y');
+            // return $current_yr;
             $joining_yr = (int)(explode('-',$faculty->doj)[0]);
             // return $current_yr-$joining_yr;
             $dt = date('Y-m-d');
@@ -109,11 +110,11 @@ class FacultyController extends Controller
                 return view('faculty.pages.addpaperpublication');
             }
             $paperpublication= new FacultyPaperPublication;
-            $a=implode(',',$_POST['field_name1'] );
-            $b=implode(',',$_POST['field_name2'] );
+            
+            $b=implode(',',$_POST['coauthor_names'] );
             $paperpublication->title=$request['title'];
             $paperpublication->type=$request['type'];
-            $paperpublication->author_names=$a;
+            $paperpublication->author_names=$request['author_names'];
             $paperpublication->doi=$request['doi'];
             $paperpublication->issn_isbn=$request['issn_isbn'];
             $paperpublication->dop=$request['dop'];

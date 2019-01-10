@@ -23,8 +23,7 @@
             <div class="field_wrapper1">
             <label>Author</label>
                 <div>
-                    <input type="text1" name="field_name1[]" value="" placeholder="name" required/>
-                    <a href="#" class="btn btn-default add_button1" title="Add field1">Add</a>
+                    <input type="text" name="author_names" class="form-control" placeholder="Author Name" required/>
                 </div>
             </div>            
         </div>
@@ -36,8 +35,8 @@
             <div class="field_wrapper2">
                 <label>Co-Author</label>
                 <div>
-                    <input type="text2" name="field_name2[]" value="" placeholder="name" required/>
-                    <a href="#" class="btn btn-default add_button2" title="Add field2">Add</a>
+                    <input type="text" name="coauthor_names[]" class="form-control" placeholder="name" required/>
+                    <a href="#" class="btn btn-default btn-block add_button2" title="Add field2">+</a>
                 </div>
             </div>             
         </div>
