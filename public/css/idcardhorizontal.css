@@ -1,0 +1,93 @@
+body{
+    margin: 0%;
+    font-family: 'verdana';
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+.id-card-front {
+    width: 3.370in;
+    height:2.125in;
+    background-color: #fff;
+    border-radius: 10px;		
+    box-shadow: 0 0 1.5px 0px #b9b9b9;
+    position:relative;
+    /* border:1px solid; */
+}
+.id-card-back {
+width: 3.370in;
+height:2.125in;
+padding:0.1in;
+background-color: #fff;
+border-radius: 10px;		
+box-shadow: 0 0 1.5px 0px #b9b9b9;
+position:relative;
+/* border:1px solid; */
+}
+.header{
+width:3.37in;
+height:0.67in;
+background-color: #ffff66; 
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+}
+.photo{
+width:0.67in;
+height:0.9in;
+position:absolute;
+top:0.79in;
+left:0.24in;
+border:1px solid;
+}
+.details{
+width:2.37in;
+height:0.9in;
+position:absolute;
+top:0.79in;
+left:1in;
+
+}
+.sign{
+width:0.79in;
+height:0.4in;
+position:absolute;
+top:1.725in;
+left:2.58in;
+}
+
+.id-card img {
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 15px;
+    margin: 5px 0;
+}
+h3 {
+    font-size: 12px;
+    margin: 2.5px 0;
+    font-weight: 300;
+}
+p {
+    font-size: 9px;
+    margin:1px;
+}
+.header p{
+    margin:0;
+    text-align: center;
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        transform: scale(1);
+    }
+}
+@page {
+    size:A4;
+    margin: 0.4in;
+    -webkit-print-color-adjust: exact;
+}
