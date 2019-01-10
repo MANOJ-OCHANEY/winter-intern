@@ -120,36 +120,33 @@
                                 <li {{ (Request::is('/staff/attendance/faculty') ? 'class="active"' : '') }}>
                                     <a href="{{ url ('/staff/attendance/faculty' ) }}"><i class="fa fa-pencil-square-o"></i> My Attendance</a>
                                 </li>
+                                <li {{ (Request::is('/staff/profile') ? 'class="active"' : '') }}>
+                                    <a href="{{ url ('/staff/profile' ) }}"><i class="fa fa-pencil-square-o"></i>Profile</a>
+                                </li>
                             </ul>
                             
+                        </li>
+                        
+                        <li >
+                            <a href="#"><i class="fa  fa-user fa-fw "></i>Exam Department<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{ url ('/staff/examdept/updatestudents' ) }}">Update Student List</a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li >
-                            <a href="#"><i class="fa  fa-user fa-fw "></i>ID Card<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa  fa-user fa-fw "></i>Student Details<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                {{-- <li {{ (Request::is('/staff/attendance/faculty') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/staff/attendance/faculty' ) }}"><i class="fa fa-pencil-square-o"></i> My Attendance</a>
-                                </li> --}}
                                 <li>
-                                <a href="{{ url ('/staff/addIdDetails') }}"><i class="fa  fa-pencil-square-o "></i><Placeholder>Fill ID Details</Placeholder></span></a>
+                                    <a href="{{ url ('/staff/update/add' ) }}">Add Student</a>
                                 </li>
                                 <li>
-                                <a href="{{ url ('/staff/takeApplicationId') }}"><i class="fa  fa-pencil-square-o "></i><Placeholder>Edit ID Details</Placeholder></span></a>
-                                </li>
-                                <li>
-                                <a href="{{ url ('/staff/verifyIdDetails') }}"><i class="fa  fa-user fa-fw "></i><Placeholder>Verify ID Details</Placeholder></span></a>
-                                </li>
-                                <li>
-                                <a href="{{ url ('/staff/idsToPrint/1') }}"><i class="fa  fa-user fa-fw "></i><Placeholder>Print IDs</Placeholder></span></a>
+                                    <a href="{{ url ('/staff/update/edit' ) }}">Edit Student</a>
                                 </li>
                             </ul>
-                            
                         </li>
-                        
-                        <li >
-                            <a href="#"><i class="fa  fa-user fa-fw "></i><Placeholder>XYZ</Placeholder></span></a>
-                        </li>
-                        
                         
                     </ul>
                 </div>
@@ -191,13 +188,15 @@
         </div>
 
         <div id="page-wrapper">
-			 <div class="row">
+			<div class="row">
                 <div class="col-lg-12">
                    
-                    <div id="page-heading"></div>
+                    <div id="page-heading">
+                        
+                    </div>
                 </div>
                 <!-- /.col-lg-12 -->
-           </div>
+            </div>
 			<div class="row">
                    
 				@yield('section')
@@ -206,4 +205,6 @@
             <!-- /#page-wrapper -->
         </div>
     </div>
+
+<script type="text/javascript" src="{{ URL::to('js/studentAllotment.js') }}"></script>  
 @stop

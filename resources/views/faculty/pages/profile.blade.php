@@ -6,47 +6,47 @@
 <div class="profile">
     <div class="row">      <!--header--> 
     <br>
-    <div class="col-lg-12 col-xs-12 name" style="margin:5px">
+    <div class="col-lg-12 col-xs-12 name" >
         <div class="row">
             <div class="col-md-9">
-                {{-- <strong style="font-size:40px">{{$staff->first_name}} {{$staff->last_name}}</strong> --}}
-                <strong style="font-size:40px"> [FirstName] [LastName] </strong>
+                <strong style="font-size:40px">{{$staff->first_name}} {{$staff->last_name}}</strong>
+                {{-- <strong style="font-size:40px"> [FirstName] [LastName] </strong> --}}
             </div>
             <div class="col-md-3">
                 <br>
-                {{-- <p class="text-primary ">Last Seen: {{$staff->last_active}}</p> --}}
-                <p class="text-primary ">Last Seen: [LastSeen]</p>
+                <p class="text-primary ">Last Seen: {{$staff->last_active}}</p>
+                {{-- <p class="text-primary ">Last Seen: [LastSeen]</p> --}}
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <dt class="text-muted" style="font-size:20px">Employee Number</dt>
-                {{-- <p>{{$staff->e_id}}</p> --}}
-                <p> [EID] </p>
+                <p>{{$staff->e_id}}</p>
+                {{-- <p> [EID] </p> --}}
                 <dt class="text-muted" style="font-size:20px">Designation</dt>
-                {{-- <p>{{$staff->designation}}</p> --}}
-                <p> [Designtion] </p>
+                <p>{{$staff->designation}}</p>
+                {{-- <p> [Designtion] </p> --}}
                 <dt class="text-muted" style="font-size:20px">Department</dt>
-                {{-- <p>{{$department->dept_name}}</p> --}}
-                <p> [Department Name] </p>
+                <p>{{$department->dept_name}}</p>
+                {{-- <p> [Department Name] </p> --}}
             </div>
             <div class="col-md-4">
                 <!-- <div class="col-lg-3 col-xs-12 name  pull-left"> -->
                         <dt class="text-muted" style="font-size:20px">Date Of Joining</dt>
-                        {{-- <p>{{$staff->doj}}</p> --}}
-                        <p> [Date of Joining] </p>
+                        <p>{{$staff->doj}}</p>
+                        {{-- <p> [Date of Joining] </p> --}}
                         {{-- If the person has left, the field has a value != 0000-00-00 --}}
                         @if($staff->dol != '0000-00-00')
                             <dt class="text-muted" style="font-size:20px">Date Of Leaving</dt>
-                            {{-- <p>{{$staff->dol}}</p> --}}
-                            <p> [Date of Leaving] </p>
+                            <p>{{$staff->dol}}</p>
+                            {{-- <p> [Date of Leaving] </p> --}}
                         @endif
                         <dt class="text-muted" style="font-size:20px">Probation Time</dt>
-                        {{-- <p>{{$staff->probation_start}} to {{$staff->probation_end}}</p> --}}
-                        <p>[StartOfProbation] to [EndOfProbation]</p>
+                        <p>{{$staff->probation_start}} to {{$staff->probation_end}}</p>
+                        {{-- <p>[StartOfProbation] to [EndOfProbation]</p> --}}
                         <dt class="text-muted" style="font-size:20px">VES Email</dt>
-                        {{-- <p>{{$staff->email}}</p> --}}
-                        <p> [EMAIL] </p>
+                        <p>{{$staff->email}}</p>
+                        {{-- <p> [EMAIL] </p> --}}
                 <!-- </div> -->
             </div>
             <div class="col-md-3  col-xs-12 profilepic pull-right"  style="margin:5px">
@@ -66,7 +66,7 @@
     <hr>
         <div class="row">
         <div class="col-lg-4  col-xs-12 name pull-left" >
-            <strong class="text-danger" style="font-size:18px">Personal Details</strong></br></br>
+            <strong class="text-danger" style="font-size:18px">Personal Details</strong><br><br>
             <dl>
                 <dt>Mobile Number</dt>
                 {{-- <dd>{{$staff->mobile}}</dd> --}}

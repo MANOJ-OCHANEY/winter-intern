@@ -55,4 +55,32 @@ class Faculty extends Model
     {
         return $this->hasMany('App\Comment','e_id');
     }
+
+    public function paper_publications() {
+        return $this->hasMany('App\FacultyPaperPublication','e_id','e_id');
+    }
+    
+    public function courses() {
+        return $this->hasMany('App\FacultyCourses','e_id','e_id');
+    }
+
+    public function patents() {
+        return $this->hasMany('App\FacultyPatents','e_id','e_id');
+    }
+
+    public function activities() {
+        return $this->hasMany('App\FacultyActivities','e_id','e_id');
+    }
+
+    public function research_grants() {
+        return $this->hasMany('App\FacultyResearchGrants','e_id','e_id');
+    }
+    
+    public function industry_interactions() {
+        return $this->hasMany('App\FacultyIndustryInteraction','e_id','e_id');
+    }
+    
+    public function invitations() {
+        return $this->hasMany('App\FacultyInvitations','e_id','e_id');
+    }
 }

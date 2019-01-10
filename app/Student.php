@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $table = 'student';
+    public $timestamps = false;
 
     protected $primaryKey = 'uid';
 
@@ -33,5 +34,9 @@ class Student extends Model
     public function studentList()
     {
         return $this->hasOne('App\StudentList', 'uid', 'uid');
+    }
+
+    public function terms() {
+        return $this->belongsToMany('App\Term');
     }
 }

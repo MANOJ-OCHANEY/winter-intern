@@ -12,10 +12,18 @@ use App\Course_map;
 use App\SubjectAllotment;
 use App\Term;
 use App\CtCC;
-use App\Profile_images;
+// use App\Profile_images;
 use File;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
+
+use App\FacultyPaperPublication;
+use App\FacultyCourses;
+use App\FacultyPatents;
+use App\FacultyActivities;
+use App\FacultyResearchGrants;
+use App\FacultyIndustryInteraction;
+use App\FacultyInvitations;
 
 class FacultyController extends Controller
 {
@@ -40,14 +48,461 @@ class FacultyController extends Controller
     public function profile(Request $request){
         
         if(session('e_id')){
-            $e_id =  $request->session()->get('e_id'); //Later found by auth
+            // if ($request->isMethod('get')) {
+            //     return 'get';
+            // }
+            $e_id =  $request->session()->get('e_id');
             $faculty = Faculty::find($e_id);
             $department = Department::find($faculty->department_id);
+            
+            $academic_years = array();
+            // return date("M jS, Y", strtotime($faculty->doj));
+            $current_yr = date('Y');
+            $joining_yr = (int)(explode('-',$faculty->doj)[0]);
+            // return $current_yr-$joining_yr;
+            $dt = date('Y-m-d');
+            $st = $current_yr.'-07-01';
+            if($dt > $st) {
+                // return 'odd';
+                $count = $current_yr-$joining_yr;
+                for($i = $current_yr; $count >= 0; $i--) {
+                    array_push($academic_years,implode('-',[$i,$i+1]));
+                    $count = $count - 1;
+                }
+                // return $academic_years;
+            }
+            else {
+                // return 'even';
+                $count = $current_yr-$joining_yr-1;
+                // return $count;
+                for($i = $current_yr-1; $count >= 0; $i--) {
+                    array_push($academic_years,implode('-',[$i,$i+1]));
+                    $count = $count - 1;
+                }
+                // return $academic_years;
+            }
+            
+            $paper_publications = $faculty->paper_publications()->where('academic_year',$academic_years[0])->get();
+            $courses = $faculty->courses()->where('academic_year',$academic_years[0])->get();
+            $activities = $faculty->activities()->where('academic_year',$academic_years[0])->get();
+            $industry_interactions = $faculty->industry_interactions()->where('academic_year',$academic_years[0])->get();
+            $invitations = $faculty->invitations()->where('academic_year',$academic_years[0])->get();
+            $patents = $faculty->patents()->where('academic_year',$academic_years[0])->get();
+            $research_grants = $faculty->research_grants()->where('academic_year',$academic_years[0])->get();
+            // if()
+            // return $courses;
             // return $department;
-            $profilePic = Profile_images::find($e_id);
+            // $profilePic = Profile_images::find($e_id);
+            $profilePic = null;
             // return $profilePic;
             
-            return view('faculty.pages.profile')->with('staff', $faculty)->with('department',$department)->with('pic', $profilePic);
+            return view('faculty.pages.profile1')->with('staff', $faculty)->with('department',$department)->with('pic', $profilePic)->with('paper_publications',$paper_publications)->with('courses',$courses)->with('activities',$activities)->with('industry_interactions',$industry_interactions)->with('invitations',$invitations)->with('patents',$patents)->with('research_grants',$research_grants)->with('academic_years',$academic_years);
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function addpaperpublications(Request $request){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.addpaperpublication');
+            }
+            $paperpublication= new FacultyPaperPublication;
+            $a=implode(',',$_POST['field_name1'] );
+            $b=implode(',',$_POST['field_name2'] );
+            $paperpublication->title=$request['title'];
+            $paperpublication->type=$request['type'];
+            $paperpublication->author_names=$a;
+            $paperpublication->doi=$request['doi'];
+            $paperpublication->issn_isbn=$request['issn_isbn'];
+            $paperpublication->dop=$request['dop'];
+            $paperpublication->place=$request['place'];
+            $paperpublication->link=$request['link'];
+            $paperpublication->year=$request['year'];
+            $paperpublication->coauthor_names=$b;
+            $paperpublication->e_id=$request->session()->get('e_id');
+            $paperpublication->is_author=$request['isauthor'];
+            $paperpublication->save();
+            
+            return redirect('/staff/profile')->with('success','Data Added Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function editpaperpublications(Request $request,$id = null){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                $paper=FacultyPaperPublication::find($id);
+                return view('faculty.pages.editpaperpublication')->with('paper',$paper);
+            }
+            $id=$request->input('paperid');
+            $paperpublication=FacultyPaperPublication::find($id);
+            $a=implode(',',$_POST['field_name1'] );
+            $b=implode(',',$_POST['field_name2'] );
+            $paperpublication->title=$request['title'];
+            $paperpublication->type=$request['type'];
+            $paperpublication->author_names=$a;
+            $paperpublication->doi=$request['doi'];
+            $paperpublication->issn_isbn=$request['issn_isbn'];
+            $paperpublication->dop=$request['dop'];
+            $paperpublication->place=$request['place'];
+            $paperpublication->link=$request['link'];
+            $paperpublication->year=$request['year'];
+            $paperpublication->coauthor_names=$b;
+            $paperpublication->e_id=$request->session()->get('e_id');
+            $paperpublication->is_author=$request['isauthor'];
+            $paperpublication->save();
+            
+            return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function addcourses(Request $request){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.addcourse');
+            }
+            $course= new FacultyCourses;
+            $a=implode(',',$_POST['field_name1']);
+            $course->name=$request['name'];
+            $course->description=$a;
+            $course->organised_by=$request['organised_by'];
+            $course->from_date=$request['from_date'];
+            $course->to_date=$request['to_date'];
+            $course->no_of_days=$request['no_of_days'];
+            $course->place=$request['place'];
+            $course->conducted_attended=$request['conducted_attended'];
+            $course->e_id=$request->session->get('e_id');
+            $course->save();
+            
+            return redirect('/staff/profile')->with('success','Data Added Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function editcourses(Request $request,$id = null){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                $course=FacultyCourses::find($id);
+                return view('faculty.pages.editcourse')->with('course',$course);
+            }
+            $id=$request->input('courseid');
+            $course=FacultyCourses::find($id);
+            $a=implode(',',$_POST['field_name1']);
+            $course->name=$request['name'];
+            $course->description=$a;
+            $course->organised_by=$request['organised_by'];
+            $course->from_date=$request['from_date'];
+            $course->to_date=$request['to_date'];
+            $course->no_of_days=$request['no_of_days'];
+            $course->place=$request['place'];
+            $course->conducted_attended=$request['conducted_attended'];
+            $course->e_id=$request->session->get('e_id');
+            $course->save();
+            
+            return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function addpatents(Request $request){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.addpatent');
+            }
+            $patent=new FacultyPatents;
+            $a=implode(',',$_POST['field_name1']);
+            $patent->name=$request['name'];
+            $patent->application_no=$request['application_number'];
+            $patent->inventor=$request['patent_inventor_name'];
+            $patent->type_of_user=$request['type_of_user'];
+            $patent->coinventors=$a;
+            $patent->status=$request['status'];
+            $patent->year=$request['year'];
+            $patent->e_id=$request->session()->get('e_id');
+            $patent->save();
+            
+            return redirect('/staff/profile')->with('success','Data Added Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function editpatents(Request $request,$id=null){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                $patent=FacultyPatents::find($id);        
+                return view('faculty.pages.editpatents')->with('patent',$patent);
+            }
+            $id=$request->input('patentid');
+            $patent=FacultyPatents::find($id);
+            $a=implode(',',$_POST['field_name1']);
+            $patent->name=$request['name'];
+            $patent->application_no=$request['application_number'];
+            $patent->inventor=$request['patent_inventor_name'];
+            $patent->type_of_user=$request['type_of_user'];
+            $patent->coinventors=$a;
+            $patent->status=$request['status'];
+            $patent->year=$request['year'];
+            $patent->e_id=$request->session()->get('e_id');
+            $patent->save();
+            
+            return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function addactivities(Request $request){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.addactivities');
+            }
+            $e_id=$request->session()->get('e_id');
+            $activity=new FacultyActivities;
+            $activity->title=$request->input('title_of_activity');
+            $activity->type=$request->input('type_of_activity');
+            $activity->duration=$request->input('duration_of_activity');
+            $activity->year=$request->input('activity_year');
+            $activity->e_id=$e_id;
+            $activity->save();
+            
+            return redirect('/staff/profile')->with('success','Data Added Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function editactivities(Request $request,$id=null){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                $activity=FacultyActivities::find($id);
+                return view('faculty.pages.editactivities')->with('activity',$activity);
+            }
+            $id=$request->input('activityid');
+            $e_id=$request->session()->get('e_id');
+            $activity=FacultyActivities::find($id);
+            $activity->title=$request->input('title_of_activity');
+            $activity->type=$request->input('type_of_activity');
+            $activity->duration=$request->input('duration_of_activity');
+            $activity->year=$request->input('activity_year');
+            $activity->e_id=$e_id;
+            $activity->save();
+            
+            return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function addresearchgrants(Request $request){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.addresearchgrants');
+            }
+            $e_id = $request->session()->get('e_id');
+            $first_name=$request->session()->get('first_name');
+            $last_name=$request->session()->get('last_name');
+            $name=$first_name.' '.$last_name;
+            $grants=new FacultyResearchGrants;
+            $grants->title=$request->input('title_of_grant');
+            $grants->faculty_name=$name;
+            $grants->agency=$request->input('agency');
+            $grants->period_from=$request->input('period_from');
+            $grants->period_to=$request->input('period_to');
+            $grants->grant_amount=$request->input('grant_amount');
+            $grants->year=$request->input('grant_year');
+            $grants->e_id=$e_id;
+            $grants->save();
+            
+            return redirect('/staff/profile')->with('success','Data Added Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function editresearchgrants(Request $request,$id=null){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                $grant=FacultyResearchGrants::find($id);
+                return view('faculty.pages.editresearchgrants')->with('grant',$grant);
+            }
+            $id=$request->input('grantid');
+            $e_id = $request->session()->get('e_id');
+            $first_name=$request->session()->get('first_name');
+            $last_name=$request->session()->get('last_name');
+            $name=$first_name.' '.$last_name;
+            $grants=FacultyResearchGrants::find($id);
+            $grants->title=$request->input('title_of_grant');
+            $grants->faculty_name=$name;
+            $grants->agency=$request->input('agency');
+            $grants->period_from=$request->input('period_from');
+            $grants->period_to=$request->input('period_to');
+            $grants->grant_amount=$request->input('grant_amount');
+            $grants->year=$request->input('grant_year');
+            $grants->e_id=$e_id;
+            $grants->save();
+            
+            return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function addindustryinteractions(Request $request){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.addindustryinteraction');
+            }
+            $e_id = $request->session()->get('e_id');
+            $first_name=$request->session()->get('first_name');
+            $last_name=$request->session()->get('last_name');
+            $name=$first_name.' '.$last_name;
+            $industryinteraction=new FacultyIndustryInteraction;
+            $industryinteraction->title_of_industry_project=$request->input('title_of_industry_project');
+            $industryinteraction->industry_name=$request->input('industry_name');
+            $industryinteraction->industry_contact_person=$request->input('industry_contact_person');
+            $industryinteraction->faculty_name=$name;
+            $industryinteraction->year=$request->input('interaction_year');
+            $industryinteraction->e_id=$e_id;
+            $industryinteraction->save();
+            
+            return redirect('/staff/profile')->with('success','Data Added Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function editindustryinteractions(Request $request,$id=null){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                $industryinteraction=FacultyIndustryInteraction::find($id);
+                return view("faculty.pages.editindustryinteraction")->with('industryinteraction',$industryinteraction);
+            }
+            $id=$request->input('interactionid');
+            $e_id = $request->session()->get('e_id');
+            $first_name=$request->session()->get('first_name');
+            $last_name=$request->session()->get('last_name');
+            $name=$first_name.' '.$last_name;
+            $industryinteraction=FacultyIndustryInteraction::find($id);
+            $industryinteraction->title_of_industry_project=$request->input('title_of_industry_project');
+            $industryinteraction->industry_name=$request->input('industry_name');
+            $industryinteraction->industry_contact_person=$request->input('industry_contact_person');
+            $industryinteraction->faculty_name=$name;
+            $industryinteraction->year=$request->input('interaction_year');
+            $industryinteraction->e_id=$e_id;
+            $industryinteraction->save();
+            
+            return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function addinvitations(Request $request){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.addinvitations');
+            }
+            $e_id = $request->session()->get('e_id');
+            $invitations=new FacultyInvitations;
+            $invitations->title_of_lecture=$request->input('title_of_lecture');
+            $invitations->title_of_conference=$request->input('title_of_conference');
+            $invitations->organised_by=$request->input('organised_by');
+            $invitations->international_national=$request->input('type_of_conference');
+            $invitations->year=$request->input('invitation_year');
+            $invitations->e_id=$e_id;
+            $invitations->save();
+            
+            return redirect('/staff/profile')->with('success','Data Added Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function editinvitations(Request $request,$id=null){
+        if(session('e_id')){
+            if ($request->isMethod('get')) {
+                $invitation=FacultyInvitations::find($id);
+                return view('faculty.pages.editinvitations')->with('invitation',$invitation);
+            }
+            $id=$request->input('postid');
+            $e_id = $request->session()->get('e_id');
+            $invitations=FacultyInvitations::find($id);
+            $invitations->title_of_lecture=$request->input('title_of_lecture');
+            $invitations->title_of_conference=$request->input('title_of_conference');
+            $invitations->organised_by=$request->input('organised_by');
+            $invitations->international_national=$request->input('type_of_conference');
+            $invitations->year=$request->input('invitation_year');
+            $invitations->e_id=$e_id;
+            $invitations->save();
+            
+            return redirect('/staff/profile')->with('success','Data Modified Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function getyeardata(Request $request) {
+        if(session('e_id')){
+            $category = $request->input('category');
+            $year = $request->input('year');
+
+            $e_id =  $request->session()->get('e_id');
+            $faculty = Faculty::find($e_id);
+
+            if($category == 'paper-publications') {
+                $paper_publications = $faculty->paper_publications()->where('academic_year',$year)->get()->toJson();
+                return $paper_publications;
+            }
+            else if($category == 'courses-conducted') {
+                $courses = $faculty->courses()->where('academic_year',$year)->where('conducted_attended',1)->get()->toJson();
+                return $courses;
+            }
+            else if($category == 'courses-attended') {
+                $courses = $faculty->courses()->where('academic_year',$year)->where('conducted_attended',0)->get()->toJson();
+                return $courses;
+            }
+            else if($category == 'patents-details') {
+                $patents = $faculty->patents()->where('academic_year',$year)->get()->toJson();
+                return $patents;
+            }
+            else if($category == 'activities') {
+                $activities = $faculty->activities()->where('academic_year',$year)->get()->toJson();
+                return $activities;
+            }
+            else if($category == 'research-grants') {
+                $research_grants = $faculty->research_grants()->where('academic_year',$year)->get()->toJson();
+                return $research_grants;
+            }
+            else if($category == 'industry-interaction') {
+                $industry_interactions = $faculty->industry_interactions()->where('academic_year',$year)->get()->toJson();
+                return $industry_interactions;
+            }
+            else if($category == 'invitations') {
+                $invitations = $faculty->invitations()->where('academic_year',$year)->get()->toJson();
+                return $invitations;
+            }
         }
         else{
             return redirect()->back()->with('error','Unauthorised Access');
@@ -585,8 +1040,7 @@ class FacultyController extends Controller
 
     }
 
-    public function assignCTCC()
-    {
+    public function assignCTCC() {
         if(session('e_id')){
             foreach(session('roles') as $role){
                 if($role == 8)
@@ -665,8 +1119,7 @@ class FacultyController extends Controller
         }
     }
 
-    public function addCTCC(Request $request)
-    {
+    public function addCTCC(Request $request){
         if(session('e_id')){
             foreach(session('roles') as $role)
             {
@@ -701,8 +1154,7 @@ class FacultyController extends Controller
         }
     }
 
-    public function excel()
-    {
+    public function excel() {
     
         $staff_data= Faculty::all(['e_id','first_name','last_name','short_form','department_id','designation','email','mobile','landline','Expertise']);
         $staff_data_array = [];
@@ -731,13 +1183,11 @@ class FacultyController extends Controller
     }
 
     
-    public function report_rid_13()
-    {
+    public function report_rid_13() {
         return view('faculty.pages.report_rid_13');
     }
 
-    public function generate_list_with_doj(Request $request)
-    {
+    public function generate_list_with_doj(Request $request) {
         $this -> validate($request, [
             'year_doj' =>'required'
         ]);

@@ -31,6 +31,42 @@
 Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
 
     Route::get('/home', 'FacultyController@index');
+
+    // Routes for Profile Page
+    Route::get('/profile','FacultyController@profile');
+
+    Route::get('/addpaperpublications','FacultyController@addpaperpublications');
+    Route::post('/addpaperpublications','FacultyController@addpaperpublications');
+    Route::get('/addcourses','FacultyController@addcourses');
+    Route::post('/addcourses','FacultyController@addcourses');
+    Route::get('/addpatents','FacultyController@addpatents');
+    Route::post('/addpatents','FacultyController@addpatents');
+    Route::get('/addactivities','FacultyController@addactivities');
+    Route::post('/addactivities','FacultyController@addactivities');
+    Route::get('/addresearchgrants','FacultyController@addresearchgrants');
+    Route::post('/addresearchgrants','FacultyController@addresearchgrants');
+    Route::get('/addindustryinteractions','FacultyController@addindustryinteractions');
+    Route::post('/addindustryinteractions','FacultyController@addindustryinteractions');
+    Route::get('/addinvitations','FacultyController@addinvitations');
+    Route::post('/addinvitations','FacultyController@addinvitations');
+    
+    Route::get('/editpaperpublications/{id}','FacultyController@editpaperpublications');
+    Route::post('/editpaperpublications','FacultyController@editpaperpublications');
+    Route::get('/editcourses/{id}','FacultyController@editcourses');
+    Route::post('/editcourses','FacultyController@editcourses');
+    Route::get('/editpatents/{id}','FacultyController@editpatents');
+    Route::post('/editpatents','FacultyController@editpatents');
+    Route::get('/editactivities/{id}','FacultyController@editactivities');
+    Route::post('/editactivities','FacultyController@editactivities');
+    Route::get('/editresearchgrants/{id}','FacultyController@editresearchgrants');
+    Route::post('/editresearchgrants','FacultyController@editresearchgrants');
+    Route::get('/editindustryinteractions/{id}','FacultyController@editindustryinteractions');
+    Route::post('/editindustryinteractions','FacultyController@editindustryinteractions');
+    Route::get('/editinvitations/{id}','FacultyController@editinvitations');
+    Route::post('/editinvitations','FacultyController@editinvitations');
+    
+    Route::get('/getyeardata','FacultyController@getyeardata');
+    //END
     
     Route::get('/attendance/faculty', 'FacultyController@facultyattendance');
     Route::get('search/', 'FacultyController@searchStudent');
@@ -44,35 +80,15 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::get('/remove_from_db','ExamDeptController@removeFromDB');
     /*Our routes complete here*/
 
-
-
-    // Route::get('/showfaculty/{eid}','idDetailsController@showfaculty');
     
-    /*Routes for ID printing procedure*/
-    Route::get('/addIdDetails','idCardController@index');
-    Route::get('/webcamImage','idCardController@webcamImage');
-    Route::post('/addIdDetails/submit','idCardController@store');
-    Route::get('/idView/{application_id}','idCardController@show');
-    
-    
-    Route::get('/takeApplicationId','idCardController@takeApplicationId');
-    Route::post('/takeApplicationId/submit','idCardController@verifyApplicationId');
+    Route::get('/update/add','StudentDetailController@create');
+    // Route::get('/update/add','StudentDetailController@addStudent');
+    Route::get('/update/edit','StudentDetailController@takeuid');
+    Route::post('/passid', 'StudentDetailController@passid');
+    Route::get('/edit/{name}', 'StudentDetailController@edit');
+    Route::post('/update/{name?}', 'StudentDetailController@update');
+    Route::post('/store', 'StudentDetailController@store');
 
-    Route::get('/editIdDetails/{application_id}','idCardController@edit');
-    Route::post('/editIdDetails/submit','idCardController@update');
-
-    Route::get('/verifyIdDetails','idCardController@verifyIdDetails');
-
-    Route::get('/revertForIdEdit/{application_id}','idCardController@reverted');
-    Route::get('/forwardForIdPrint/{application_id}','idCardController@forwarded');
-    Route::get('/idsToPrint/{orientation}','idCardController@idsToPrint');
-
-
-    
-
-    /*Routes for ID printing end here*/
-
-    
 
 });
 
