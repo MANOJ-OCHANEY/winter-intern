@@ -5,7 +5,7 @@
 <div class="container-fluid">
     {{-- Search faculty   --}}
     {{ Form::open(['action' => 'FacultyController@facultyreports', 'method'=>'POST']) }}
-    <div class="input-group custom-search-form col-sm-8">
+    <div class="input-group">
         <input type="text" class="form-control" placeholder="Search Faculty" name="faculty" id="faculty" required>
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit" name="Search">
@@ -13,9 +13,7 @@
             </button>
         </span>
     </div>
-    
     <input type="hidden" name="hidden_eid" class="hidden_eid" id="hidden_eid">
-
     <div class="suggestion"></div>
     {{ Form::close() }}
 </div>
@@ -26,16 +24,16 @@
     {
         $(document).on('keyup','#faculty',function()
         {
-            var staff_name = $(this).val();
+            var field_value = $(this).val();
             var tr = $(this).parent().parent();
-            if(staff_name.length > 1)
+            if(field_value.length > 1)
             {
-                console.log(staff_name);
+                console.log(field_value);
                 $.ajax(
                 {
                     type:'get',
                     url:'/staff/facultysuggestion',
-                    data:{'term': staff_name},
+                    data:{'field_value': field_value},
                     success:function(match){
                         console.log(match);
                         console.log(match['e_id']);

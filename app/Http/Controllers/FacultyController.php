@@ -274,8 +274,34 @@ class FacultyController extends Controller
     public function facultyreports(Request $request) {
         if (session('e_id')) {
             if ($request->isMethod('get')) {
-                return view('faculty.pages.facultyreports');
+                // return $request->path();
+                $dept = Faculty::where('e_id','=',session('e_id'))->first()->department_id;
+                // return $dept;
+                if ($request->path() == 'staff/facultyreports') {
+                    // return session()->all();
+                    return view('faculty.pages.facultyreportsearch');
+                }
+                if ($request->path() == 'staff/facultysuggestion') {
+                    foreach(session('roles') as $role){
+                        if($role == 4 || $role == 9 || $role == 8 || $role == 0){
+                            $field_value = $request->field_value;
+                            $match = Faculty::where('department_id' , '=' , $dept)
+                            ->where(function($query) use ($field_value) {
+                                $query->where('e_id','=',$field_value)
+                                ->orWhere('short_form','=',$field_value)
+                                ->orWhere('first_name','=',$field_value)
+                                ->orWhere('last_name','=',$field_value);
+                            })
+                            ->first();
+                            return response()->json($match);
+                        }
+                    }
+                    return redirect()->back()->with('error','Unauthorised Access');
+                }
                 // return session('roles');
+            }
+            if($request->isMethod('post')) {
+                return view('faculty.pages.facultyreportview');
             }
         }
         else {

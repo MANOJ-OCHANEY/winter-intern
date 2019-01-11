@@ -66,7 +66,7 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::post('/editinvitations','FacultyController@editinvitations');
 
     Route::get('/facultyreports','FacultyController@facultyreports');
-    Route::get('/facultysuggestion','FacultyController@matchfaculty');
+    Route::get('/facultysuggestion','FacultyController@facultyreports');
 
 
 
