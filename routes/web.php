@@ -64,6 +64,12 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::post('/editindustryinteractions','FacultyController@editindustryinteractions');
     Route::get('/editinvitations/{id}','FacultyController@editinvitations');
     Route::post('/editinvitations','FacultyController@editinvitations');
+
+    Route::get('/facultyreports','FacultyController@facultyreports');
+    Route::get('/facultysuggestion','FacultyController@matchfaculty');
+
+
+
     
     Route::get('/hodprofile',function(){
         return view('faculty.pages.hodprofile');

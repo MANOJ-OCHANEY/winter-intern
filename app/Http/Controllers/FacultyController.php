@@ -271,6 +271,18 @@ class FacultyController extends Controller
         }
     }
 
+    public function facultyreports(Request $request) {
+        if (session('e_id')) {
+            if ($request->isMethod('get')) {
+                return view('faculty.pages.facultyreports');
+                // return session('roles');
+            }
+        }
+        else {
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
     public function addpaperpublications(Request $request){
         if(session('e_id')){
             if ($request->isMethod('get')) {
