@@ -5,18 +5,25 @@
 <div class="container-fluid">
     {{-- Search faculty   --}}
     {{-- {{ Form::open(['action' => url('/staff/facultyreports'), 'method'=>'POST']) }} --}}
-    <form action=" {{ url('/staff/facultyreports') }} " method="POST">
+    <form action=" {{ url('/staff/facultyreports') }} " method="POST" class="form-inline">
         {{ csrf_field() }}
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Faculty" name="faculty" id="faculty" required>
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="submit" name="Search">
-                    <i class="fa fa-search"></i>
-                </button>
-            </span>
+        <label>Search by particular faculty or select all faculty</label>
+        <div id="search-bar">
+            <input type="text" class="form-control" placeholder="Search Faculty" name="faculty" id="faculty" required onkeypress="return event.keyCode != 13;">
+            <span style="margin: 0 10px;">OR</span>
+            <input class="form-check-input" type="checkbox" name="all_faculty" id="all_faculty">
+            <label class="form-check-label" for="all">All</label>
+            <input type="hidden" name="hidden_eid" class="hidden_eid" id="hidden_eid">
+            <div class="suggestion"></div>
         </div>
-        <input type="hidden" name="hidden_eid" class="hidden_eid" id="hidden_eid">
-        <div class="suggestion"></div>
+        <br>
+        <label>Select particular Academic year or select all years</label>
+        <div id="year">
+            <input type="text" class="form-control" placeholder="Search Faculty" name="faculty" id="faculty" required onkeypress="return event.keyCode != 13;">
+            <span style="margin: 0 10px;">OR</span>
+            <input class="form-check-input" type="checkbox" name="all_faculty" id="all_faculty">
+            <label class="form-check-label" for="all">All</label>
+        </div>
     </form>
     {{-- {{ Form::close() }} --}}
 </div>
@@ -25,6 +32,17 @@
     // Real time Suggestions 
     $(document).ready(function()
     {
+        $('#all').on('change',function() {
+            // console.log(this.checked);
+            if(this.checked) {
+                console.log('hi');
+                $('#faculty').attr('disabled','disabled');
+            }
+            else {
+                $('#faculty').removeAttr('disabled');
+            }
+        });
+
         $(document).on('keyup','#faculty',function()
         {
             var field_value = $(this).val();
