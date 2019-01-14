@@ -4,18 +4,21 @@
 
 <div class="container-fluid">
     {{-- Search faculty   --}}
-    {{ Form::open(['action' => 'FacultyController@facultyreports', 'method'=>'POST']) }}
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search Faculty" name="faculty" id="faculty" required>
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="submit" name="Search">
-                <i class="fa fa-search"></i>
-            </button>
-        </span>
-    </div>
-    <input type="hidden" name="hidden_eid" class="hidden_eid" id="hidden_eid">
-    <div class="suggestion"></div>
-    {{ Form::close() }}
+    {{-- {{ Form::open(['action' => url('/staff/facultyreports'), 'method'=>'POST']) }} --}}
+    <form action=" {{ url('/staff/facultyreports') }} " method="POST">
+        {{ csrf_field() }}
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search Faculty" name="faculty" id="faculty" required>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" name="Search">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <input type="hidden" name="hidden_eid" class="hidden_eid" id="hidden_eid">
+        <div class="suggestion"></div>
+    </form>
+    {{-- {{ Form::close() }} --}}
 </div>
 
 <script>

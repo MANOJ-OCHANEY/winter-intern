@@ -302,7 +302,9 @@ class FacultyController extends Controller
                 // return session('roles');
             }
             if($request->isMethod('post')) {
-                return view('faculty.pages.facultyreportview');
+                // return $request->field_value;
+                $eid =  $request->hidden_eid;
+                return view('faculty.pages.facultyreportview')->with('eid',$eid);
             }
         }
         else {
