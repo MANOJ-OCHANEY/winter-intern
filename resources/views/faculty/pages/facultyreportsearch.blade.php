@@ -19,9 +19,32 @@
         <br>
         <label>Select particular Academic year or select all years</label>
         <div id="year">
-            <input type="text" class="form-control" placeholder="Search Faculty" name="faculty" id="faculty" required onkeypress="return event.keyCode != 13;">
+            <select name="academic_year" class="form-control" id="academic_year">
+                @foreach($academic_years as $academic_year)
+                <option value="{{ $academic_year }}"> {{ $academic_year }} </option>
+                @endforeach
+            </select> 
             <span style="margin: 0 10px;">OR</span>
-            <input class="form-check-input" type="checkbox" name="all_faculty" id="all_faculty">
+            <input class="form-check-input" type="checkbox" name="all_year" id="all_year">
+            <label class="form-check-label" for="all">All</label>
+        </div>
+        <br>
+        <label>Select particular categories or select all years</label>
+        <div id="category">
+            <input class="form-check-input" type="checkbox" name="all_year" class="cat">
+            <label class="form-check-label" for="all">Paper Publications</label>
+            <input class="form-check-input" type="checkbox" name="all_year" class="cat">
+            <label class="form-check-label" for="all">Courses Conducted</label>
+            <input class="form-check-input" type="checkbox" name="all_year" class="cat">
+            <label class="form-check-label" for="all">All</label>
+            <input class="form-check-input" type="checkbox" name="all_year" class="cat">
+            <label class="form-check-label" for="all">All</label>
+            <input class="form-check-input" type="checkbox" name="all_year" class="cat">
+            <label class="form-check-label" for="all">All</label>
+            <input class="form-check-input" type="checkbox" name="all_year" class="cat">
+            <label class="form-check-label" for="all">All</label>
+            <span style="margin: 0 10px;">OR</span>
+            <input class="form-check-input" type="checkbox" name="all_year" id="all_year">
             <label class="form-check-label" for="all">All</label>
         </div>
     </form>
@@ -32,7 +55,7 @@
     // Real time Suggestions 
     $(document).ready(function()
     {
-        $('#all').on('change',function() {
+        $('#all_faculty').on('change',function() {
             // console.log(this.checked);
             if(this.checked) {
                 console.log('hi');
@@ -40,6 +63,17 @@
             }
             else {
                 $('#faculty').removeAttr('disabled');
+            }
+        });
+
+        $('#all_year').on('change',function() {
+            // console.log(this.checked);
+            if(this.checked) {
+                console.log('hi');
+                $('#academic_year').attr('disabled','disabled');
+            }
+            else {
+                $('#academic_year').removeAttr('disabled');
             }
         });
 

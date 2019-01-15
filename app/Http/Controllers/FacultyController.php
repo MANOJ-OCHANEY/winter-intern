@@ -280,7 +280,34 @@ class FacultyController extends Controller
                 // return $dept;
                 if ($request->path() == 'staff/facultyreports') {
                     // return session()->all();
-                    return view('faculty.pages.facultyreportsearch');
+                    $academic_years = array();
+                    // return date("M jS, Y", strtotime($faculty->doj));
+                    $current_yr = date('Y');
+                    // return $current_yr;
+                    $joining_yr = 1950;
+                    // return $current_yr-$joining_yr;
+                    $dt = date('Y-m-d');
+                    $st = $current_yr.'-07-01';
+                    if($dt > $st) {
+                        // return 'odd';
+                        $count = $current_yr-$joining_yr;
+                        for($i = $current_yr; $count >= 0; $i--) {
+                            array_push($academic_years,implode('-',[$i,$i+1]));
+                            $count = $count - 1;
+                        }
+                        // return $academic_years;
+                    }
+                    else {
+                        // return 'even';
+                        $count = $current_yr-$joining_yr-1;
+                        // return $count;
+                        for($i = $current_yr-1; $count >= 0; $i--) {
+                            array_push($academic_years,implode('-',[$i,$i+1]));
+                            $count = $count - 1;
+                        }
+                        // return $academic_years;
+                    }
+                    return view('faculty.pages.facultyreportsearch')->with('academic_years',$academic_years);
                 }
                 if ($request->path() == 'staff/facultysuggestion') {
                     foreach(session('roles') as $role){
