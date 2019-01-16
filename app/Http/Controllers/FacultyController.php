@@ -337,7 +337,7 @@ class FacultyController extends Controller
                 if(isset($all_cat)) {
                     $cat = array('paper_publications','courses_conducted','courses_attended','activities','industry_interactions','invitations','patents','research_grants');
                 }
-
+                // return $cat;
                 if(isset($all_faculty)) {
                     $faculties = Faculty::where('department_id',$dept)->get(['e_id']);
                     $faculties = $faculties->pluck('e_id')->toArray();
