@@ -14,6 +14,8 @@
 </style>
 
 <div class="container-fluid">
+    <a class="btn" href=" {{ url('/staff/exceldownload/xlsx') }} ">Download</a>
+
     <div class="row">
         <div class="col-sm-3">
             <div style="position: relative">
@@ -395,8 +397,8 @@
         </div>
     </div>
     <br>
-    <br>
-    <br>
+
+
     
 </div>
 

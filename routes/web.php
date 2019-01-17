@@ -32,6 +32,8 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
 
     Route::get('/home', 'FacultyController@index');
 
+    Route::get('/exceldownload/{type}', 'MaatwebsiteController@downloadExcel');
+
     // Routes for Profile Page
     Route::get('/profile','FacultyController@profile');
 

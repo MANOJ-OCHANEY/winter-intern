@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Input;
-use App\Term;
+use App\FacultyActivities;
 use DB;
 use Session;
 use Excel;
@@ -17,7 +17,7 @@ class MaatwebsiteController extends Controller
     }
     public function downloadExcel($type)
     {
-        $data = Term::get()->toArray();
+        $data = FacultyActivities::get()->toArray();
         return Excel::create('laravelcode', function($excel) use ($data) {
             $excel->sheet('mySheet', function($sheet) use ($data)
             {
