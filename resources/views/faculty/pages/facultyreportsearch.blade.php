@@ -20,6 +20,7 @@
         <label>Select particular Academic year or select all years</label>
         <div id="year">
             <select name="academic_year" class="form-control" id="academic_year" required>
+                <option value="">Select..</option>
                 @foreach($academic_years as $academic_year)
                 <option value="{{ $academic_year }}"> {{ $academic_year }} </option>
                 @endforeach

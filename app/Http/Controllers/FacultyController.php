@@ -272,6 +272,145 @@ class FacultyController extends Controller
         }
     }
 
+    public function getfacultydata($eid,$academic_year,$cat,$all_faculty,$all_year,$all_cat) {
+
+        $paper_publications = null;
+        $courses_conducted = null;
+        $courses_attended = null;
+        $activities = null;
+        $industry_interactions = null;
+        $invitations = null;
+        $patents = null;
+        $research_grants = null;
+
+        if(isset($all_cat)) {
+            $cat = array('paper_publications','courses_conducted','courses_attended','activities','industry_interactions','invitations','patents','research_grants');
+        }
+        // return $cat;
+        if(isset($all_faculty)) {
+            $faculties = Faculty::where('department_id',$dept)->get(['e_id']);
+            $faculties = $faculties->pluck('e_id')->toArray();
+            if(isset($all_year)) {
+                if(in_array('paper_publications',$cat)) {
+                    $paper_publications = FacultyPaperPublication::whereIn('e_id',$faculties)->get(['title','author_names','coauthor_names','type','doi','issn_isbn','dop','place','link','academic_year']);
+                }
+                if(in_array('courses_conducted',$cat)) {
+                    $courses_conducted = FacultyCourses::where('conducted_attended','1')->whereIn('e_id',$faculties)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('courses_attended',$cat)) {
+                    $courses_attended = FacultyCourses::where('conducted_attended','0')->whereIn('e_id',$faculties)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('activities',$cat)) {
+                    $activities = FacultyActivities::whereIn('e_id',$faculties)->get(['type','title','duration','academic_year']);
+                }
+                if(in_array('industry_interactions',$cat)) {
+                    $industry_interactions = FacultyIndustryInteraction::whereIn('e_id',$faculties)->get(['title_of_industry_project','industry_name','industry_contact_person','faculty_name','academic_year']);
+                }
+                if(in_array('invitations',$cat)) {
+                    $invitations = FacultyInvitations::whereIn('e_id',$faculties)->get(['title_of_lecture','title_of_conference','organised_by','international_national','academic_year']);
+                }
+                if(in_array('patents',$cat)) {
+                    $patents = FacultyPatents::whereIn('e_id',$faculties)->get(['type_of_user','application_no','name','inventor','coinventors','status','academic_year']);
+                }
+                if(in_array('research_grants',$cat)) {
+                    $research_grants = FacultyResearchGrants::whereIn('e_id',$faculties)->get(['title','faculty_name','agency','period_from','period_to','grant_amount','academic_year']);
+                }
+            }
+            else {
+                if(in_array('paper_publications',$cat)) {
+                    $paper_publications = FacultyPaperPublication::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get(['title','author_names','coauthor_names','type','doi','issn_isbn','dop','place','link','academic_year']);
+                }
+                if(in_array('courses_conducted',$cat)) {
+                    $courses_conducted = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','1')->whereIn('e_id',$faculties)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('courses_attended',$cat)) {
+                    $courses_attended = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','0')->whereIn('e_id',$faculties)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('activities',$cat)) {
+                    $activities = FacultyActivities::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get(['type','title','duration','academic_year']);
+                }
+                if(in_array('industry_interactions',$cat)) {
+                    $industry_interactions = FacultyIndustryInteraction::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get(['title_of_industry_project','industry_name','industry_contact_person','faculty_name','academic_year']);
+                }
+                if(in_array('invitations',$cat)) {
+                    $invitations = FacultyInvitations::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get(['title_of_lecture','title_of_conference','organised_by','international_national','academic_year']);
+                }
+                if(in_array('patents',$cat)) {
+                    $patents = FacultyPatents::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get(['type_of_user','application_no','name','inventor','coinventors','status','academic_year']);
+                }
+                if(in_array('research_grants',$cat)) {
+                    $research_grants = FacultyResearchGrants::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get(['title','faculty_name','agency','period_from','period_to','grant_amount','academic_year']);
+                }
+            }
+        }
+        else {
+            if(isset($all_year)) {
+                if(in_array('paper_publications',$cat)) {
+                    $paper_publications = FacultyPaperPublication::where('e_id',$eid)->get(['title','author_names','coauthor_names','type','doi','issn_isbn','dop','place','link','academic_year']);
+                }
+                if(in_array('courses_conducted',$cat)) {
+                    $courses_conducted = FacultyCourses::where('conducted_attended','1')->where('e_id',$eid)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('courses_attended',$cat)) {
+                    $courses_attended = FacultyCourses::where('conducted_attended','0')->where('e_id',$eid)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('activities',$cat)) {
+                    $activities = FacultyActivities::where('e_id',$eid)->get(['type','title','duration','academic_year']);
+                }
+                if(in_array('industry_interactions',$cat)) {
+                    $industry_interactions = FacultyIndustryInteraction::where('e_id',$eid)->get(['title_of_industry_project','industry_name','industry_contact_person','faculty_name','academic_year']);
+                }
+                if(in_array('invitations',$cat)) {
+                    $invitations = FacultyInvitations::where('e_id',$eid)->get(['title_of_lecture','title_of_conference','organised_by','international_national','academic_year']);
+                }
+                if(in_array('patents',$cat)) {
+                    $patents = FacultyPatents::where('e_id',$eid)->get(['type_of_user','application_no','name','inventor','coinventors','status','academic_year']);
+                }
+                if(in_array('research_grants',$cat)) {
+                    $research_grants = FacultyResearchGrants::where('e_id',$eid)->get(['title','faculty_name','agency','period_from','period_to','grant_amount','academic_year']);
+                }
+            }
+            else {
+                if(in_array('paper_publications',$cat)) {
+                    $paper_publications = FacultyPaperPublication::where('academic_year',$academic_year)->where('e_id',$eid)->get(['title','author_names','coauthor_names','type','doi','issn_isbn','dop','place','link','academic_year']);
+                }
+                if(in_array('courses_conducted',$cat)) {
+                    $courses_conducted = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','1')->where('e_id',$eid)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('courses_attended',$cat)) {
+                    $courses_attended = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','0')->where('e_id',$eid)->get(['description','organised_by','from_date','to_date','no_of_days','place','name','academic_year']);
+                }
+                if(in_array('activities',$cat)) {
+                    $activities = FacultyActivities::where('academic_year',$academic_year)->where('e_id',$eid)->get(['type','title','duration','academic_year']);
+                }
+                if(in_array('industry_interactions',$cat)) {
+                    $industry_interactions = FacultyIndustryInteraction::where('academic_year',$academic_year)->where('e_id',$eid)->get(['title_of_industry_project','industry_name','industry_contact_person','faculty_name','academic_year']);
+                }
+                if(in_array('invitations',$cat)) {
+                    $invitations = FacultyInvitations::where('academic_year',$academic_year)->where('e_id',$eid)->get(['title_of_lecture','title_of_conference','organised_by','international_national','academic_year']);
+                }
+                if(in_array('patents',$cat)) {
+                    $patents = FacultyPatents::where('academic_year',$academic_year)->where('e_id',$eid)->get(['type_of_user','application_no','name','inventor','coinventors','status','academic_year']);
+                }
+                if(in_array('research_grants',$cat)) {
+                    $research_grants = FacultyResearchGrants::where('academic_year',$academic_year)->where('e_id',$eid)->get(['title','faculty_name','agency','period_from','period_to','grant_amount','academic_year']);
+                }
+            }
+        }
+
+        $data = array();
+        $data['paper_publications'] = $paper_publications;
+        $data['courses_conducted'] = $courses_conducted;
+        $data['courses_attended'] = $courses_attended;
+        $data['activities'] = $activities;
+        $data['industry_interactions'] = $industry_interactions;
+        $data['invitations'] = $invitations;
+        $data['patents'] = $patents;
+        $data['research_grants'] = $research_grants;
+
+        return $data;
+    }
+
     public function facultyreports(Request $request) {
         if (session('e_id')) {
             $dept = Faculty::where('e_id','=',session('e_id'))->first()->department_id;
@@ -325,134 +464,146 @@ class FacultyController extends Controller
                 $all_year = $request->all_year;
                 $all_cat = $request->all_cat;
 
-                $paper_publications = null;
-                $courses_conducted = null;
-                $courses_attended = null;
-                $activities = null;
-                $industry_interactions = null;
-                $invitations = null;
-                $patents = null;
-                $research_grants = null;
+                $data = $this->getfacultydata($eid,$academic_year,$cat,$all_faculty,$all_year,$all_cat);
 
-                if(isset($all_cat)) {
-                    $cat = array('paper_publications','courses_conducted','courses_attended','activities','industry_interactions','invitations','patents','research_grants');
-                }
-                // return $cat;
-                if(isset($all_faculty)) {
-                    $faculties = Faculty::where('department_id',$dept)->get(['e_id']);
-                    $faculties = $faculties->pluck('e_id')->toArray();
-                    if(isset($all_year)) {
-                        if(in_array('paper_publications',$cat)) {
-                            $paper_publications = FacultyPaperPublication::whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('courses_conducted',$cat)) {
-                            $courses_conducted = FacultyCourses::where('conducted_attended','1')->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('courses_attended',$cat)) {
-                            $courses_attended = FacultyCourses::where('conducted_attended','0')->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('activities',$cat)) {
-                            $activities = FacultyActivities::whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('industry_interactions',$cat)) {
-                            $industry_interactions = FacultyIndustryInteraction::whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('invitations',$cat)) {
-                            $invitations = FacultyInvitations::whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('patents',$cat)) {
-                            $patents = FacultyPatents::whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('research_grants',$cat)) {
-                            $research_grants = FacultyResearchGrants::whereIn('e_id',$faculties)->get();
-                        }
-                    }
-                    else {
-                        if(in_array('paper_publications',$cat)) {
-                            $paper_publications = FacultyPaperPublication::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('courses_conducted',$cat)) {
-                            $courses_conducted = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','1')->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('courses_attended',$cat)) {
-                            $courses_attended = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','0')->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('activities',$cat)) {
-                            $activities = FacultyActivities::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('industry_interactions',$cat)) {
-                            $industry_interactions = FacultyIndustryInteraction::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('invitations',$cat)) {
-                            $invitations = FacultyInvitations::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('patents',$cat)) {
-                            $patents = FacultyPatents::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
-                        }
-                        if(in_array('research_grants',$cat)) {
-                            $research_grants = FacultyResearchGrants::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
-                        }
-                    }
-                }
-                else {
-                    if(isset($all_year)) {
-                        if(in_array('paper_publications',$cat)) {
-                            $paper_publications = FacultyPaperPublication::where('e_id',$eid)->get();
-                        }
-                        if(in_array('courses_conducted',$cat)) {
-                            $courses_conducted = FacultyCourses::where('conducted_attended','1')->where('e_id',$eid)->get();
-                        }
-                        if(in_array('courses_attended',$cat)) {
-                            $courses_attended = FacultyCourses::where('conducted_attended','0')->where('e_id',$eid)->get();
-                        }
-                        if(in_array('activities',$cat)) {
-                            $activities = FacultyActivities::where('e_id',$eid)->get();
-                        }
-                        if(in_array('industry_interactions',$cat)) {
-                            $industry_interactions = FacultyIndustryInteraction::where('e_id',$eid)->get();
-                        }
-                        if(in_array('invitations',$cat)) {
-                            $invitations = FacultyInvitations::where('e_id',$eid)->get();
-                        }
-                        if(in_array('patents',$cat)) {
-                            $patents = FacultyPatents::where('e_id',$eid)->get();
-                        }
-                        if(in_array('research_grants',$cat)) {
-                            $research_grants = FacultyResearchGrants::where('e_id',$eid)->get();
-                        }
-                    }
-                    else {
-                        if(in_array('paper_publications',$cat)) {
-                            $paper_publications = FacultyPaperPublication::where('academic_year',$academic_year)->where('e_id',$eid)->get();
-                        }
-                        if(in_array('courses_conducted',$cat)) {
-                            $courses_conducted = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','1')->where('e_id',$eid)->get();
-                        }
-                        if(in_array('courses_attended',$cat)) {
-                            $courses_attended = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','0')->where('e_id',$eid)->get();
-                        }
-                        if(in_array('activities',$cat)) {
-                            $activities = FacultyActivities::where('academic_year',$academic_year)->where('e_id',$eid)->get();
-                        }
-                        if(in_array('industry_interactions',$cat)) {
-                            $industry_interactions = FacultyIndustryInteraction::where('academic_year',$academic_year)->where('e_id',$eid)->get();
-                        }
-                        if(in_array('invitations',$cat)) {
-                            $invitations = FacultyInvitations::where('academic_year',$academic_year)->where('e_id',$eid)->get();
-                        }
-                        if(in_array('patents',$cat)) {
-                            $patents = FacultyPatents::where('academic_year',$academic_year)->where('e_id',$eid)->get();
-                        }
-                        if(in_array('research_grants',$cat)) {
-                            $research_grants = FacultyResearchGrants::where('academic_year',$academic_year)->where('e_id',$eid)->get();
-                        }
-                    }
-                }
+                $paper_publications = $data['paper_publications'];
+                $courses_conducted = $data['courses_conducted'];
+                $courses_attended = $data['courses_attended'];
+                $activities = $data['activities'];
+                $industry_interactions = $data['industry_interactions'];
+                $invitations = $data['invitations'];
+                $patents = $data['patents'];
+                $research_grants = $data['research_grants'];
+
+                $query = array();
+                $query['eid'] = $eid;
+                $query['academic_year'] = $academic_year;
+                // $query['cat'] = $cat.toJson();
+                $query['cat'] = implode('-',$cat);
+                $query['all_faculty'] = $all_faculty;
+                $query['all_year'] = $all_year;
+                $query['all_cat'] = $all_cat;
+
+
+                // if(isset($all_cat)) {
+                //     $cat = array('paper_publications','courses_conducted','courses_attended','activities','industry_interactions','invitations','patents','research_grants');
+                // }
+                // // return $cat;
+                // if(isset($all_faculty)) {
+                //     $faculties = Faculty::where('department_id',$dept)->get(['e_id']);
+                //     $faculties = $faculties->pluck('e_id')->toArray();
+                //     if(isset($all_year)) {
+                //         if(in_array('paper_publications',$cat)) {
+                //             $paper_publications = FacultyPaperPublication::whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('courses_conducted',$cat)) {
+                //             $courses_conducted = FacultyCourses::where('conducted_attended','1')->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('courses_attended',$cat)) {
+                //             $courses_attended = FacultyCourses::where('conducted_attended','0')->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('activities',$cat)) {
+                //             $activities = FacultyActivities::whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('industry_interactions',$cat)) {
+                //             $industry_interactions = FacultyIndustryInteraction::whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('invitations',$cat)) {
+                //             $invitations = FacultyInvitations::whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('patents',$cat)) {
+                //             $patents = FacultyPatents::whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('research_grants',$cat)) {
+                //             $research_grants = FacultyResearchGrants::whereIn('e_id',$faculties)->get();
+                //         }
+                //     }
+                //     else {
+                //         if(in_array('paper_publications',$cat)) {
+                //             $paper_publications = FacultyPaperPublication::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('courses_conducted',$cat)) {
+                //             $courses_conducted = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','1')->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('courses_attended',$cat)) {
+                //             $courses_attended = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','0')->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('activities',$cat)) {
+                //             $activities = FacultyActivities::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('industry_interactions',$cat)) {
+                //             $industry_interactions = FacultyIndustryInteraction::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('invitations',$cat)) {
+                //             $invitations = FacultyInvitations::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('patents',$cat)) {
+                //             $patents = FacultyPatents::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
+                //         }
+                //         if(in_array('research_grants',$cat)) {
+                //             $research_grants = FacultyResearchGrants::where('academic_year',$academic_year)->whereIn('e_id',$faculties)->get();
+                //         }
+                //     }
+                // }
+                // else {
+                //     if(isset($all_year)) {
+                //         if(in_array('paper_publications',$cat)) {
+                //             $paper_publications = FacultyPaperPublication::where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('courses_conducted',$cat)) {
+                //             $courses_conducted = FacultyCourses::where('conducted_attended','1')->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('courses_attended',$cat)) {
+                //             $courses_attended = FacultyCourses::where('conducted_attended','0')->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('activities',$cat)) {
+                //             $activities = FacultyActivities::where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('industry_interactions',$cat)) {
+                //             $industry_interactions = FacultyIndustryInteraction::where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('invitations',$cat)) {
+                //             $invitations = FacultyInvitations::where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('patents',$cat)) {
+                //             $patents = FacultyPatents::where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('research_grants',$cat)) {
+                //             $research_grants = FacultyResearchGrants::where('e_id',$eid)->get();
+                //         }
+                //     }
+                //     else {
+                //         if(in_array('paper_publications',$cat)) {
+                //             $paper_publications = FacultyPaperPublication::where('academic_year',$academic_year)->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('courses_conducted',$cat)) {
+                //             $courses_conducted = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','1')->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('courses_attended',$cat)) {
+                //             $courses_attended = FacultyCourses::where('academic_year',$academic_year)->where('conducted_attended','0')->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('activities',$cat)) {
+                //             $activities = FacultyActivities::where('academic_year',$academic_year)->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('industry_interactions',$cat)) {
+                //             $industry_interactions = FacultyIndustryInteraction::where('academic_year',$academic_year)->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('invitations',$cat)) {
+                //             $invitations = FacultyInvitations::where('academic_year',$academic_year)->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('patents',$cat)) {
+                //             $patents = FacultyPatents::where('academic_year',$academic_year)->where('e_id',$eid)->get();
+                //         }
+                //         if(in_array('research_grants',$cat)) {
+                //             $research_grants = FacultyResearchGrants::where('academic_year',$academic_year)->where('e_id',$eid)->get();
+                //         }
+                //     }
+                // }
 
                 // return $cat;
                 // echo isset($cat);
                 // return view('faculty.pages.facultyreportview')->with('eid',$eid);
-                return view('faculty.pages.facultyreportview')->with('paper_publications',$paper_publications)->with('courses_conducted',$courses_conducted)->with('courses_attended',$courses_attended)->with('activities',$activities)->with('industry_interactions',$industry_interactions)->with('invitations',$invitations)->with('patents',$patents)->with('research_grants',$research_grants);
+                return view('faculty.pages.facultyreportview')->with('query',$query)->with('paper_publications',$paper_publications)->with('courses_conducted',$courses_conducted)->with('courses_attended',$courses_attended)->with('activities',$activities)->with('industry_interactions',$industry_interactions)->with('invitations',$invitations)->with('patents',$patents)->with('research_grants',$research_grants);
             }
         }
         else {
@@ -460,6 +611,96 @@ class FacultyController extends Controller
         }
     }
 
+    public function downloadreports(Request $request){
+        if(session('e_id')){
+            $eid = $request->eid;
+            $academic_year = $request->academic_year;
+            $cat = $request->category;
+            $cat = explode('-',$cat);
+            // return $cat;
+            $all_faculty = $request->all_faculty;
+            $all_year = $request->all_year;
+            $all_cat = $request->all_cat;
+
+            $data = $this->getfacultydata($eid,$academic_year,$cat,$all_faculty,$all_year,$all_cat);
+
+            $paper_publications = $data['paper_publications'];
+            $courses_conducted = $data['courses_conducted'];
+            $courses_attended = $data['courses_attended'];
+            $activities = $data['activities'];
+            $industry_interactions = $data['industry_interactions'];
+            $invitations = $data['invitations'];
+            $patents = $data['patents'];
+            $research_grants = $data['research_grants'];
+
+            Excel::create('Faculty Reports',function($excel) use($paper_publications,$courses_conducted,$courses_attended,$activities,$industry_interactions,$invitations,$patents,$research_grants)
+            {
+                $excel->setTitle('Faculty Reports');
+
+                if(isset($paper_publications) && count($paper_publications)) { 
+                    $excel->sheet('Paper Publications',function($sheet) use($paper_publications){
+                        $sheet->fromArray($paper_publications,'null','A1','null','null');
+                    });
+                }
+
+                if(isset($courses_conducted) && count($courses_conducted))
+                {
+                    
+                    $excel->sheet('Courses Conducted',function($sheet) use($courses_conducted){
+                        $sheet->fromArray($courses_conducted,'null','A1','null','null');
+                    });
+                }
+                if(isset($courses_attended) && count($courses_attended))
+                {
+                    $excel->sheet('Courses Attended',function($sheet) use($courses_attended){
+                        $sheet->fromArray($courses_attended,'null','A1','null','null');
+                    });
+                }
+                if(isset($activities) && count($activities))
+                {
+                    $excel->sheet('Activities',function($sheet) use($activities){
+                        $sheet->fromArray($activities,'null','A1','null','null');
+                    });
+                }
+
+                if(isset($industry_interactions) && count($industry_interactions))
+                {
+                    
+                    $excel->sheet('Industry Interactions',function($sheet) use($industry_interactions){
+                        $sheet->fromArray($industry_interactions,'null','A1','null','null');
+                    });
+                }
+
+                if(isset($invitations) && count($invitations))
+                {
+                    
+                    $excel->sheet('Invitations',function($sheet) use($invitations){
+                        $sheet->fromArray($invitations,'null','A1','null','null');
+                    });
+                }
+                if(isset($patents) && count($patents))
+                {
+                    
+                    $excel->sheet('Patents',function($sheet) use($patents){
+                        $sheet->fromArray($patents,'null','A1','null','null');
+                    });
+                }
+                if(isset($research_grants) && count($research_grants))
+                {
+                    
+                    $excel->sheet('Research Grants',function($sheet) use($research_grants){
+                        $sheet->fromArray($research_grants,'null','A1','null','null');
+                    });
+                }
+        
+            })->download('xlsx');
+
+            return redirect('/staff/profile')->with('success','Downloaded Successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
     public function addpaperpublications(Request $request){
         if(session('e_id')){
             if ($request->isMethod('get')) {
