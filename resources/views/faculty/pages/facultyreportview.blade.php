@@ -29,9 +29,9 @@
     <div class="row category">
         <h3 class="text-danger collapsible" data-toggle="collapse" data-target="#paper-publications"><b>Paper Publications</b></h3>
         <div id="paper-publications" class="collapse">
-            <div class="col-sm-12">
+            <div class="col-sm-12" style="overflow-x:scroll;">
                 @if(count($paper_publications))
-                <table class="table">
+                <table class="table table-bordered">
                 <thead class="thead-dark">
                     <tr>
                         <th>Title</th>
@@ -43,6 +43,7 @@
                         <th>DOI</th>
                         <th>ISBN/ISSN</th>
                         <th>Link</th>
+                        <th>Academic Year</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +58,7 @@
                         <td> {{ $paper_publication->doi }} </td>
                         <td> {{ $paper_publication->issn_isbn }} </td>
                         <td><a href="{{ $paper_publication->link }}" target="_blank">{{ $paper_publication->link }}</a> </td>
+                        <td> {{ $paper_publication->academic_year }} </td>
                     </tr>
                     @endforeach
                 </tbody>

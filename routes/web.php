@@ -67,7 +67,10 @@ Route::group(['prefix'=>'staff', 'middleware' => 'admin'], function() {
     Route::get('/editinvitations/{id}','FacultyController@editinvitations');
     Route::post('/editinvitations','FacultyController@editinvitations');
     
+    Route::get('/deletepost/{category}/{id}','FacultyController@deletepost');
+
     Route::get('/getyeardata','FacultyController@getyeardata');
+
 
     Route::get('/facultyreports','FacultyController@facultyreports');
     Route::get('/facultysuggestion','FacultyController@facultyreports');

@@ -2,30 +2,26 @@
 
 @section('section')
 <div class="page-container">
-<form action="{{url('/staff/updatecourse')}}" method='post'> 
+<form action="{{url('/staff/editcourses')}}" method='post'> 
     {{csrf_field()}}
     <h1>EDIT Courses</h1>
 
    <input type="text" value="{{$course->id}}" name="courseid" hidden>
-  
-   <label>Course Description:</label>
 
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6">
             <div class="form-group">
-                <div>
-                    
-                    <input type="text" name="description"  placeholder="description" required class="form-control"  value="{{$course->description}}">
-                </div>
+                <label>Course Description:</label>
+                <input type="text" class="form-control" name="description" value="{{$course->description}}" placeholder="Description" required/>
             </div>            
-        </div>   
+        </div>
     </div>
 
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
                 <label>Organised By:</label>
-                <input type="text" name="organised_by" class='form-control' placeholder="name" required value="{{$course->organised_by}}">
+                <input type="text" name="organised_by" class='form-control' placeholder="Organised By" value="{{$course->organised_by}}" required>
             </div>             
         </div>
     </div>
@@ -50,7 +46,7 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label>Number of Days:</label>
-                <input type="number" name="no_of_days" class='form-control' placeholder="number of days" required value="{{$course->no_of_days}}">
+                <input type="number" name="no_of_days" class='form-control' placeholder="number of days" min="1" required value="{{$course->no_of_days}}">
             </div>             
         </div>
     </div>
@@ -68,9 +64,39 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label>Conducted/Attended:</label><br>
-               
-                <input type="radio" name="conducted_attended"  value="1"  @if($course->conducted_attended == 1) checked="checked" @endif >Conducted
-                <input type="radio" name="conducted_attended"  value="0" @if($course->conducted_attended == 0) checked="checked" @endif>Attended 
+                <div class="radio">
+                    <label><input type="radio" name="conducted_attended" value="1" @if($course->conducted_attended == 1) checked="checked" @endif>Conducted</label>
+                    <label><input type="radio" name="conducted_attended" value="0" @if($course->conducted_attended == 0) checked="checked" @endif>Attended</label> 
+                </div>
+            </div>             
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Academic Year:</label>
+                {{-- <input type="text" name="academic_year[]" class='form-control' required> --}}
+                <div class="row">
+                    <div class="col-sm-5">
+                        <select name="year[]" class="form-control" id="from-year" required>
+                            <option value="">From</option>
+                            @foreach($from_years as $from_year)
+                            <option value="{{ $from_year }}" @if($from_year == $course->from_year) selected @endif> {{ $from_year }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <span class="col-sm-1">&#8211</span>
+                    <div class="col-sm-5">
+                        {{-- <select name="year[]" class="form-control" id="to-year" required>
+                            <option value="">To</option>
+                            @foreach($to_years as $to_year)
+                            <option value="{{ $to_year }}" @if($to_year == $course->to_year) selected @endif> {{ $to_year }} </option>
+                            @endforeach
+                        </select> --}}
+                        <input type="text" class="form-control" name="year[]" value="{{ $course->to_year }}" id="to-year" readonly>
+                    </div>
+                </div>
             </div>             
         </div>
     </div>

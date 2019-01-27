@@ -33,7 +33,7 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label>Duration Of Activity:</label>
-                <input type="text" name="duration_of_activity"  class= "form-control" placeholder = "Duration od activity" required="required">
+                <input type="text" name="duration_of_activity"  class= "form-control" placeholder = "Duration of activity" required="required">
             </div>             
         </div>
     </div>
@@ -41,7 +41,7 @@
        <div class="col-sm-3">
             <div class="form-group">
                 <label>Activity  Year:</label>
-                <input type="year" class="form-control" placeholder="Year of Invitation" name="activity_year">
+                <input type="date" class="form-control" placeholder="Year of Invitation" name="activity_year">
             </div>             
         </div>
     </div>

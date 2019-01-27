@@ -42,172 +42,6 @@ class FacultyController extends Controller
         }
     }
 
-    // public function hodprofile(Request $request){
-    //     if(session('e_id')){
-            
-    //         $arr = array();
-    //         if ($request['all_year']=='all')
-    //             if($request['all_faculty']=='all'){
-    //                 if($request['paper']=='paper'){
-    //                     $papers=FacultyPaperPublication::all();
-    //                     $arr['paper']=$papers;
-    //                 }
-    //                 if($request['course']=='course'){
-    //                     $courses=FacultyCourses::all();
-    //                     $arr['course']=$courses;
-    //                 }
-    //                 if($request['patent']=='patent'){
-    //                     $patents=FacultyPatents::all();
-    //                     $arr['patent']=$patents;
-    //                 }
-    //                 if($request['activity']=='activity'){
-    //                     $activities=FacultyActivities::all();
-    //                     $arr['activity']=$activities;
-    //                 }
-    //                 if($request['industry_interaction']=='industry_interaction'){
-    //                     $interactions=FacultyIndustryInteraction::all();
-    //                     $arr['industry_interaction']=$interactions;
-    //                 }
-    //                 if($request['invitation']=='invitation'){
-    //                     $invitations=FacultyInvitations::all();
-    //                     $arr['invitation']=$invitations;
-    //                 }
-    //                 if($request['research_grant']=='research_grant'){
-    //                     $grants=FacultyResearchGrants::all();
-    //                     $arr['research_grant']=$grants;
-    //                 }
-    //             }
-
-    //             if ($request['all_year']=='all')
-    //             if($request['all_faculty']!='all'){
-    //                 $faculty=$request['search_faculty'];
-    //                 if($request['paper']=='paper'){
-    //                     $papers=FacultyPaperPublication::where('e_id',$faculty)->get();
-    //                     $arr['paper']=$papers;
-    //                 }
-    //                 if($request['course']=='course'){
-    //                     $courses=FacultyCourses::where('e_id',$faculty)->get();
-    //                     $arr['course']=$courses;
-    //                 }
-    //                 if($request['patent']=='patent'){
-    //                     $patents=FacultyPatents::where('e_id',$faculty)->get();
-    //                     $arr['patent']=$patents;
-    //                 }
-    //                 if($request['activity']=='activity'){
-    //                     $activities=FacultyActivities::where('e_id',$faculty)->get();
-    //                     $arr['activity']=$activities;
-    //                 }
-    //                 if($request['industry_interaction']=='industry_interaction'){
-    //                     $interactions=FacultyIndustryInteraction::where('e_id',$faculty)->get();
-    //                     $arr['industry_interaction']=$interactions;
-    //                 }
-    //                 if($request['invitation']=='invitation'){
-    //                     $invitations=FacultyInvitations::where('e_id',$faculty)->get();
-    //                     $arr['invitation']=$invitations;
-    //                 }
-    //                 if($request['research_grant']=='research_grant'){
-    //                     $grants=FacultyResearchGrants::where('e_id',$faculty)->get();
-    //                     $arr['research_grant']=$grants;
-    //                 }
-    //             }
-
-    //             if ($request['all_year']!='all')
-    //             if($request['all_faculty']=='all'){
-    //                 $year=$request['search_year'];
-    //                 if($request['paper']=='paper'){
-    //                     $papers=FacultyPaperPublication::where('year',$year)->get();
-    //                     $arr['paper']=$papers;
-    //                 }
-    //                 if($request['course']=='course'){
-    //                     $courses=FacultyCourses::where('year',$year)->get();
-    //                     $arr['course']=$courses;
-    //                 }
-    //                 if($request['patent']=='patent'){
-    //                     $patents=FacultyPatents::where('year',$year)->get();
-    //                     $arr['patent']=$patents;
-    //                 }
-    //                 if($request['activity']=='activity'){
-    //                     $activities=FacultyActivities::all();
-    //                     $arr['activity']=$activities;
-    //                 }
-    //                 if($request['industry_interaction']=='industry_interaction'){
-    //                     $interactions=FacultyIndustryInteraction::where('year',$year)->get();
-    //                     $arr['industry_interaction']=$interactions;
-    //                 }
-    //                 if($request['invitation']=='invitation'){
-    //                     $invitations=FacultyInvitations::where('year',$year)->get();
-    //                     $arr['invitation']=$invitations;
-    //                 }
-    //                 if($request['research_grant']=='research_grant'){
-    //                     $grants=FacultyResearchGrants::where('year',$year)->get();
-    //                     $arr['research_grant']=$grants;
-    //                 }
-    //             }
-
-    //             if ($request['all_year']!='all')
-    //             if($request['all_faculty']!='all'){
-    //                 $faculty=$request['search_faculty'];
-    //                 $year=$request['search_year'];
-    //                 if($request['paper']=='paper'){
-    //                     $papers=FacultyPaperPublication::where('e_id',$faculty)->where('year',$year)->get();
-    //                     $arr['paper']=$papers;
-    //                 }
-    //                 if($request['course']=='course'){
-    //                     $courses=FacultyCourses::where('e_id',$faculty)->where('year',$year)->get();
-    //                     $arr['course']=$courses;
-    //                 }
-    //                 if($request['patent']=='patent'){
-    //                     $patents=FacultyPatents::where('e_id',$faculty)->where('year',$year)->get();
-    //                     $arr['patent']=$patents;
-    //                 }
-    //                 if($request['activity']=='activity'){
-    //                     $activities=FacultyActivities::where('e_id',$faculty)->where('year',$year)->get();
-    //                     $arr['activity']=$activities;
-    //                 }
-    //                 if($request['industry_interaction']=='industry_interaction'){
-    //                     $interactions=FacultyIndustryInteraction::where('e_id',$faculty)->where('year',$year)->get();
-    //                     $arr['industry_interaction']=$interactions;
-    //                 }
-    //                 if($request['invitation']=='invitation'){
-    //                     $invitations=FacultyInvitations::where('e_id',$faculty)->where('year',$year)->get();
-    //                     $arr['invitation']=$invitations;
-    //                 }
-    //                 if($request['research_grant']=='research_grant'){
-    //                     $grants=FacultyResearchGrants::where('e_id',$faculty)->where('year',$year)->get();
-    //                     $arr['research_grant']=$grants;
-    //                 }
-    //             }
-    //         // $value = $request['search'];
-    //         // $year= $request['year'];
-    //         //$year1= $request['year1'];
-    //         // return $request['paper'];
-    //         // $staff_eid=Staff::select('e_id')->where('first_name',$value)->get();
-            
-
-    //         // if($request['paper']=='paper'){
-    //         //     $papers=FacultyPaperPublication::where('e_id',$value)->where('year',$year)->get();
-    //         //     $arr['paper']=$papers;
-    //         // }
-    //         // if($request['course']=='course'){
-    //         //     $courses=FacultyCourses::where('e_id',$value)->where('year',$year)->get();
-    //         //     $arr['course']=$courses;
-    //         // }
-    //         // if($request['patent']=='patent'){
-    //         //     $patents=FacultyPatents::where('e_id',$value)->where('year',$year)->get();
-    //         //     $arr['patent']=$patents;
-    //         // }
-
-    //         // if($request['paper']=='paper'){
-    //         //     $papers=FacultyPaperPublication::where('year',$year1)->get();
-    //         //     $arr['paper']=$papers;
-    //         // }
-    //         //return $arr['paper'];
-    //         //return count ($arr['paper']);
-    //                 return view('faculty.pages.search')->with('array',$arr);
-
-                
-    //     }
-    // }
     /**
      * Route to profile page of faculty
      *
@@ -479,7 +313,10 @@ class FacultyController extends Controller
                 $query['eid'] = $eid;
                 $query['academic_year'] = $academic_year;
                 // $query['cat'] = $cat.toJson();
-                $query['cat'] = implode('-',$cat);
+                $query['cat'] = $cat;
+                if(isset($cat)){
+                    $query['cat'] = implode('-',$cat);
+                }
                 $query['all_faculty'] = $all_faculty;
                 $query['all_year'] = $all_year;
                 $query['all_cat'] = $all_cat;
@@ -611,6 +448,42 @@ class FacultyController extends Controller
         }
     }
 
+    public function getyears() {
+        $e_id =  session('e_id');
+        $faculty = Faculty::find($e_id);
+        $from_years = array();
+        $to_years = array();
+        // return date("M jS, Y", strtotime($faculty->doj));
+        $current_yr = date('Y');
+        // return $current_yr;
+        $start_yr = (int)(explode('-',$faculty->doj)[0]);
+        // return $current_yr-$start_yr;
+        $dt = date('Y-m-d');
+        $st = $current_yr.'-07-01';
+        if($dt > $st) {
+            // return 'odd';
+            $count = $current_yr-$start_yr;
+            for($i = $current_yr; $count >= 0; $i--) {
+                array_push($from_years,$i);
+                array_push($to_years,$i+1);
+                $count = $count - 1;
+            }
+            // return $academic_years;
+        }
+        else {
+            // return 'even';
+            $count = $current_yr-$start_yr-1;
+            // return $count;
+            for($i = $current_yr-1; $count >= 0; $i--) {
+                array_push($from_years,$i);
+                array_push($to_years,$i+1);
+                $count = $count - 1;
+            }
+            // return $academic_years;
+        }
+        return array($from_years,$to_years);
+    }
+
     public function downloadreports(Request $request){
         if(session('e_id')){
             $eid = $request->eid;
@@ -701,11 +574,20 @@ class FacultyController extends Controller
             return redirect()->back()->with('error','Unauthorised Access');
         }
     }
+
     public function addpaperpublications(Request $request){
         if(session('e_id')){
             if ($request->isMethod('get')) {
-                return view('faculty.pages.addpaperpublication');
+                // $path = '/json/facultySectionsData.json';
+                $path = URL::to('json/facultySectionsData.json');
+                $content = json_decode(file_get_contents($path), true);
+                // return $content['manoj']['m']['a'];
+                $paper_formats = $content['paper_publications']['paper_formats'];
+                $years = $this->getyears();
+                return view('faculty.pages.addpaperpublication')->with('from_years',$years[0])->with('to_years',$years[1])->with('paper_formats',$paper_formats);
             }
+            // return implode('-',$request['year']);
+            // return $request['year'];
             $paperpublication= new FacultyPaperPublication;
             
             $b=implode(',',$_POST['coauthor_names'] );
@@ -717,10 +599,9 @@ class FacultyController extends Controller
             $paperpublication->dop=$request['dop'];
             $paperpublication->place=$request['place'];
             $paperpublication->link=$request['link'];
-            $paperpublication->year=$request['year'];
+            $paperpublication->academic_year=implode('-',$request['year']);
             $paperpublication->coauthor_names=$b;
             $paperpublication->e_id=$request->session()->get('e_id');
-            $paperpublication->is_author=$request['isauthor'];
             $paperpublication->save();
             
             return redirect('/staff/profile')->with('success','Data Added Successfully');
@@ -733,25 +614,39 @@ class FacultyController extends Controller
     public function editpaperpublications(Request $request,$id = null){
         if(session('e_id')){
             if ($request->isMethod('get')) {
-                $paper=FacultyPaperPublication::find($id);
-                return view('faculty.pages.editpaperpublication')->with('paper',$paper);
+                $paper = FacultyPaperPublication::find($id);
+                $coauthors = explode(',',$paper->coauthor_names);
+                $paper->coauthors = $coauthors;
+                $years = explode('-',$paper->academic_year);
+                $paper->from_year = $years[0];
+                $paper->to_year = $years[1];
+                // return $paper->toJson();
+                $path = URL::to('json/facultySectionsData.json');
+                $content = json_decode(file_get_contents($path), true);
+                // return $content['manoj']['m']['a'];
+                $paper_formats = $content['paper_publications']['paper_formats'];
+                $years = $this->getyears();
+                return view('faculty.pages.editpaperpublication')->with('paper',$paper)->with('from_years',$years[0])->with('to_years',$years[1])->with('paper_formats',$paper_formats);
             }
             $id=$request->input('paperid');
             $paperpublication=FacultyPaperPublication::find($id);
-            $a=implode(',',$_POST['field_name1'] );
-            $b=implode(',',$_POST['field_name2'] );
+            if(isset($_POST['coauthor_names'])) {
+                $b=implode(',',$_POST['coauthor_names'] );
+            }
+            else {
+                $b = null;
+            }
             $paperpublication->title=$request['title'];
             $paperpublication->type=$request['type'];
-            $paperpublication->author_names=$a;
+            $paperpublication->author_names=$request['author_names'];
             $paperpublication->doi=$request['doi'];
             $paperpublication->issn_isbn=$request['issn_isbn'];
             $paperpublication->dop=$request['dop'];
             $paperpublication->place=$request['place'];
             $paperpublication->link=$request['link'];
-            $paperpublication->year=$request['year'];
+            $paperpublication->academic_year=implode('-',$request['year']);
             $paperpublication->coauthor_names=$b;
             $paperpublication->e_id=$request->session()->get('e_id');
-            $paperpublication->is_author=$request['isauthor'];
             $paperpublication->save();
             
             return redirect('/staff/profile')->with('success','Data Modified Successfully');
@@ -764,19 +659,19 @@ class FacultyController extends Controller
     public function addcourses(Request $request){
         if(session('e_id')){
             if ($request->isMethod('get')) {
-                return view('faculty.pages.addcourse');
+                $years = $this->getyears();
+                return view('faculty.pages.addcourse')->with('from_years',$years[0])->with('to_years',$years[1]);
             }
             $course= new FacultyCourses;
-            $a=implode(',',$_POST['field_name1']);
-            $course->name=$request['name'];
-            $course->description=$a;
+            $course->description=$request['description'];
             $course->organised_by=$request['organised_by'];
             $course->from_date=$request['from_date'];
             $course->to_date=$request['to_date'];
             $course->no_of_days=$request['no_of_days'];
             $course->place=$request['place'];
             $course->conducted_attended=$request['conducted_attended'];
-            $course->e_id=$request->session->get('e_id');
+            $course->academic_year=implode('-',$request['year']);
+            $course->e_id=$request->session()->get('e_id');
             $course->save();
             
             return redirect('/staff/profile')->with('success','Data Added Successfully');
@@ -790,20 +685,23 @@ class FacultyController extends Controller
         if(session('e_id')){
             if ($request->isMethod('get')) {
                 $course=FacultyCourses::find($id);
-                return view('faculty.pages.editcourse')->with('course',$course);
+                $years = explode('-',$course->academic_year);
+                $course->from_year = $years[0];
+                $course->to_year = $years[1];
+                $years = $this->getyears();
+                return view('faculty.pages.editcourse')->with('course',$course)->with('from_years',$years[0])->with('to_years',$years[1]);
             }
             $id=$request->input('courseid');
             $course=FacultyCourses::find($id);
-            $a=implode(',',$_POST['field_name1']);
-            $course->name=$request['name'];
-            $course->description=$a;
+            $course->description=$request['description'];
             $course->organised_by=$request['organised_by'];
             $course->from_date=$request['from_date'];
             $course->to_date=$request['to_date'];
             $course->no_of_days=$request['no_of_days'];
             $course->place=$request['place'];
             $course->conducted_attended=$request['conducted_attended'];
-            $course->e_id=$request->session->get('e_id');
+            $course->academic_year=implode('-',$request['year']);
+            $course->e_id=$request->session()->get('e_id');
             $course->save();
             
             return redirect('/staff/profile')->with('success','Data Modified Successfully');
@@ -1101,6 +999,47 @@ class FacultyController extends Controller
                 $invitations = $faculty->invitations()->where('academic_year',$year)->get()->toJson();
                 return $invitations;
             }
+        }
+        else{
+            return redirect()->back()->with('error','Unauthorised Access');
+        }
+    }
+
+    public function deletepost(Request $request,$category,$id) {
+        if(session('e_id')){
+            if($category == 'paper-publications') {
+                FacultyPaperPublication::find($id)->delete();
+                return 1;
+            }
+            else if($category == 'courses-conducted') {
+                FacultyCourses::find($id)->delete();
+                return 1;
+            }
+            else if($category == 'courses-attended') {
+                FacultyCourses::find($id)->delete();
+                return 1;
+            }
+            else if($category == 'patents-details') {
+                FacultyPatents::find($id)->delete();
+                return 1;
+            }
+            else if($category == 'activities') {
+                FacultyActivities::find($id)->delete();
+                return 1;
+            }
+            else if($category == 'research-grants') {
+                FacultyResearchGrants::find($id)->delete();
+                return 1;
+            }
+            else if($category == 'industry-interaction') {
+                FacultyIndustryInteraction::find($id)->delete();
+                return 1;
+            }
+            else if($category == 'invitations') {
+                FacultyInvitations::find($id)->delete();
+                return 1;
+            }
+            return 0;
         }
         else{
             return redirect()->back()->with('error','Unauthorised Access');
