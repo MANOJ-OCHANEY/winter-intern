@@ -124,7 +124,10 @@
                                     <a href="{{ url ('/staff/profile' ) }}"><i class="fa fa-pencil-square-o"></i>Profile</a>
                                 </li>
                                 <li {{ (Request::is('/staff/facultyreports') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/staff/facultyreports' ) }}"><i class="fa fa-pencil-square-o"></i>Generate Reports</a>
+                                    <a href="{{ url ('/staff/facultyreports' ) }}"><i class="fa fa-pencil-square-o"></i>My Reports</a>
+                                </li>
+                                <li {{ (Request::is('/staff/facultyreports') ? 'class="active"' : '') }}>
+                                    <a href="{{ url ('/staff/facultyreports' ) }}"><i class="fa fa-pencil-square-o"></i>Generate Reports (For HOD)</a>
                                 </li>
                             </ul>
                             

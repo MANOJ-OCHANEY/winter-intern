@@ -1,5 +1,18 @@
 {
     "paper_publications" : {
         "paper_formats" : ["IC","IJ","IEEE","IEEE XPLORE","SPRINGER"]
+    },
+
+    "activities" : {
+        "activity_types" : ["EXTENSION OR CO-CURRICULAR","CONTRIBUTION TO CORPORATE LIFE AND MANAGEMENT OF INSTITUION","PROFESSIONAL DEVELOPMENT ACTIVITIES"],
+        "duration_types" : ["Once in a semester","Once in a year","Daily"]
+    },
+
+    "research_grants" : {
+        "period_types" : ["For 2 years","For 1 year","For 6 months","For 3 months"]
+    },
+
+    "invitations" : {
+        "conference_types" : ["International","National"]
     }
 }

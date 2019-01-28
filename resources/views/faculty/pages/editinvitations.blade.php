@@ -8,7 +8,7 @@
     <input type="text" value=" {{ $invitation->id }} " name="postid" hidden>
     <h1> EDIT INVITATIONS </h1>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label>Title Of Lecture:</label>
             <input type="text" name="title_of_lecture" class ="form-control", placeholder = "Enter title of lecture" required="required" value="{{$invitation->title_of_lecture}}">
@@ -17,7 +17,7 @@
     </div>
     
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label>Title Of Conference:</label>
                 <input type="text" name="title_of_conference"  class= "form-control" placeholder = "Enter title of conference" required="required" value="{{$invitation->title_of_conference}}">
@@ -26,10 +26,10 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label>Organised By</label>
-                <input type="text" name="organised_by" class="form-control" placeholder="Name of organiser" required="required" value="{{$invitation->organised_by}}"">
+                <input type="text" name="organised_by" class="form-control" placeholder="Name of organiser" required="required" value="{{$invitation->organised_by}}">
             </div>             
         </div>
     </div>
@@ -38,19 +38,41 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label>Type of Conference:</label>
-                <select name="type_of_conference" class="form-control" required="requird" >
-                    <option value="0">International</option>
-                    <option value="1">national</option>
+                <select name="type_of_conference" class="form-control" required>
+                    <option value="">Select..</option>
+                    @foreach ($conference_types as $conference_type)
+                    <option value="{{ $conference_type }}" @if($conference_type == $invitation->type_of_conference) selected @endif>{{ $conference_type }}</option>
+                    @endforeach
                 </select>
             </div>             
          </div>
     </div>
 
     <div class="row">
-       <div class="col-sm-3">
+        <div class="col-sm-3">
             <div class="form-group">
-                <label>Invitation  Year:</label>
-                <input type="year" class="form-control" placeholder="Year of Invitation" name="invitation_year" value="{{$invitation->year}}"">
+                <label>Academic Year:</label>
+                {{-- <input type="number" name="academic_year[]" class='form-control' required> --}}
+                <div class="row">
+                    <div class="col-sm-5">
+                        <select name="year[]" class="form-control" id="from-year" required>
+                            <option value="">From</option>
+                            @foreach($from_years as $from_year)
+                            <option value="{{ $from_year }}" @if($from_year == $invitation->from_year) selected @endif> {{ $from_year }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <span class="col-sm-1">&#8211</span>
+                    <div class="col-sm-5">
+                        {{-- <select name="year[]" class="form-control" required>
+                            <option value="">To</option>
+                            @foreach($to_years as $to_year)
+                            <option value="{{ $to_year }}"> {{ $to_year }} </option>
+                            @endforeach
+                        </select> --}}
+                        <input type="text" class="form-control" name="year[]" value="{{ $invitation->to_year }}" id="to-year" readonly>
+                    </div>
+                </div>
             </div>             
         </div>
     </div>
@@ -66,11 +88,12 @@
 </div>
 
 <script>
+$(document).ready(function() {
+    $('#from-year').on('change', function() {
+        value = $(this).val();
+        $('#to-year').val(parseInt(value)+1);
+    });
+});
+</script>
 
-     
-    
-
-    </script>
-
-
- @endsection
+@endsection

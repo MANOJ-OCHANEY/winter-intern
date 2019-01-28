@@ -160,7 +160,7 @@
                         <p class="col-sm-3"><b>To</b> : {{ date("M jS, Y", strtotime( $course->to_date )) }} </p>
                         <p class="col-sm-4"><b>No of days</b> : {{ $course->no_of_days }} </p>
                         <p class="col-sm-4"><b>Place</b> : {{ $course->place }} </p>
-                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post">Delete</a></p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="{{ $course->id }}">Delete</a></p>
                     </div>
                     <br>
                     @endif
@@ -201,7 +201,7 @@
                         <p class="col-sm-3"><b>To</b> : {{ date("M jS, Y", strtotime( $course->to_date )) }} </p>
                         <p class="col-sm-4"><b>No of days</b> : {{ $course->no_of_days }} </p>
                         <p class="col-sm-4"><b>Place</b> : {{ $course->place }} </p>
-                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post">Delete</a></p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editcourses/'.$course->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="{{ $course->id }}">Delete</a></p>
                     </div>
                     <br>
                     @endif
@@ -243,7 +243,7 @@
                         <p class="col-sm-4"><b>Application Date</b> : {{ $patent->application_date }} </p>
                         <p class="col-sm-4"><b>Publication Date</b> : {{ $patent->publication_date }} </p>
                         <p class="col-sm-4"><b>Status</b> : {{ $patent->status }} </p>
-                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editpatents/'.$patent->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post">Delete</a></p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editpatents/'.$patent->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="{{ $patent->id }}">Delete</a></p>
                     </div>
                     <br>
                     @endforeach
@@ -279,7 +279,7 @@
                         <h4 class="col-sm-12"><b> {{ $activity->title }} </b></h4>
                         <p class="col-sm-12"> <b>Type</b> : {{ $activity->type }} </p>
                         <p class="col-sm-4"><b>Duration</b> :  {{ $activity->duration }} </p>
-                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editactivities/'.$activity->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post">Delete</a></p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editactivities/'.$activity->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="{{ $activity->id }}">Delete</a></p>
                     </div>
                     <br>
                     @endforeach
@@ -314,9 +314,9 @@
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $research_grant->title }} </b></h4>
                         <p class="col-sm-12"> <b>Agency</b> : {{ $research_grant->agency }} </p>
-                        <p class="col-sm-4"><b>Period</b> : {{ $research_grant->period_from }} to {{ $research_grant->period_to }}</p>
-                        <p class="col-sm-4"><b>Grant amount</b> :  {{ $research_grant->grant_amount }} </p>
-                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editresearchgrants/'.$research_grant->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post">Delete</a></p>
+                        <p class="col-sm-4"><b>Period</b> : {{ $research_grant->period }}</p>
+                        <p class="col-sm-4"><b>Grant amount</b> : Rs. {{ $research_grant->grant_amount }} lakhs</p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editresearchgrants/'.$research_grant->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="{{ $research_grant->id }}">Delete</a></p>
                     </div>
                     <br>
                     @endforeach
@@ -351,9 +351,9 @@
                     <div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                         <h4 class="col-sm-12"><b> {{ $industry_interaction->title_of_industry_project }} </b></h4>
                         <p class="col-sm-12"> <b>Industry</b> : {{ $industry_interaction->industry_name }} </p>
-                        <p class="col-sm-4"><b>Industry Faculty Name</b> : {{ $industry_interaction->faculty_name }} </p>
-                        <p class="col-sm-4"><b>Faculty contact</b> : {{ $industry_interaction->industry_contact_person }} </p>
-                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editindustryinteractions/'.$industry_interaction->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post">Delete</a></p>
+                        <p class="col-sm-4"><b>Industry Faculty Name</b> : {{ $industry_interaction->industry_faculty_name }} </p>
+                        <p class="col-sm-4"><b>Industry Faculty contact</b> : {{ $industry_interaction->industry_faculty_contact }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editindustryinteractions/'.$industry_interaction->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="{{ $industry_interaction->id }}">Delete</a></p>
                     </div>
                     <br>
                     @endforeach
@@ -389,8 +389,8 @@
                         <h4 class="col-sm-12"><b> {{ $invitation->title_of_lecture }} </b></h4>
                         <p class="col-sm-12"> <b>Title of Conference</b> : {{ $invitation->title_of_conference }} </p>
                         <p class="col-sm-4"><b>Organised by</b> : {{ $invitation->organised_by }} </p>
-                        <p class="col-sm-4"><b>Type</b> : {{ $invitation->international_national }} </p>
-                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editinvitations/'.$invitation->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post">Delete</a></p>
+                        <p class="col-sm-4"><b>Type</b> : {{ $invitation->type_of_conference }} </p>
+                        <p class="col-sm-12 text-right"><a href=" {{ url('/staff/editinvitations/'.$invitation->id) }} ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="{{ $invitation->id }}">Delete</a></p>
                     </div>
                     <br>
                     @endforeach
@@ -467,7 +467,7 @@
                                             <p class="col-sm-12"><b>DOI</b> :` + data[i]['doi'] + `</p>
                                             <p class="col-sm-12"><b>ISBN/ISSN</b> :` + data[i]['issn_isbn'] + `</p>
                                             <p class="col-sm-12"><b>Link</b> : <a href="` + data[i]['link'] + `" target="_blank">` + data[i]['link'] + `</a> </p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editpaperpublications/` + data[i]['id'] + `">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editpaperpublications/` + data[i]['id'] + `">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);
@@ -482,7 +482,7 @@
                                             <p class="col-sm-3"><b>To</b> : ` + data[i]['to_date'] + ` </p>
                                             <p class="col-sm-4"><b>No of days</b> : ` + data[i]['no_of_days'] + ` </p>
                                             <p class="col-sm-4"><b>Place</b> : ` + data[i]['place'] + ` </p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editcourses/` + data[i]['id'] + ` ">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editcourses/` + data[i]['id'] + ` ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);
@@ -497,7 +497,7 @@
                                             <p class="col-sm-3"><b>To</b> : ` + data[i]['to_date'] + ` </p>
                                             <p class="col-sm-4"><b>No of days</b> : ` + data[i]['no_of_days'] + ` </p>
                                             <p class="col-sm-4"><b>Place</b> : ` + data[i]['place'] + ` </p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editcourses/` + data[i]['id'] + ` ">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editcourses/` + data[i]['id'] + ` ">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);
@@ -514,7 +514,7 @@
                                             <p class="col-sm-4"><b>Application Date</b> :` + data[i]['application_date']  + `</p>
                                             <p class="col-sm-4"><b>Publication Date</b> :` + data[i]['publication_date']  + `</p>
                                             <p class="col-sm-4"><b>Status</b> :` + data[i]['status']  + `</p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editpatents/` + data[i]['id'] + `">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editpatents/` + data[i]['id'] + `">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);
@@ -526,7 +526,7 @@
                                             <h4 class="col-sm-12"><b>` + data[i]['title'] + `</b></h4>
                                             <p class="col-sm-12"> <b>Type</b> :` + data[i]['type'] + `</p>
                                             <p class="col-sm-4"><b>Duration</b> : ` + data[i]['duration'] + `</p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editactivities/` + data[i]['id'] + `">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editactivities/` + data[i]['id'] + `">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);
@@ -539,7 +539,7 @@
                                             <p class="col-sm-12"> <b>Agency</b> :`+ data[i]['agency'] +` </p>
                                             <p class="col-sm-4"><b>Period</b> :`+ data[i]['period_from'] +` to`+ data[i]['period_to'] +`</p>
                                             <p class="col-sm-4"><b>Grant amount</b> : `+ data[i]['grant_amount'] +` </p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editresearchgrants/`+data[i]['id']+`">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editresearchgrants/`+data[i]['id']+`">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);
@@ -550,9 +550,9 @@
                             var text = `<div class="row" style="border: 1px solid white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
                                             <h4 class="col-sm-12"><b>`+ data[i]['title_of_industry_project']+` </b></h4>
                                             <p class="col-sm-12"> <b>Industry</b> :`+ data[i]['industry_name']+` </p>
-                                            <p class="col-sm-4"><b>Industry Faculty Name</b> :`+ data[i]['faculty_name']+` </p>
-                                            <p class="col-sm-4"><b>Faculty contact</b> :`+ data[i]['industry_contact_person']+` </p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editindustryinteractions/`+data[i]['id']+`">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-4"><b>Industry Faculty Name</b> :`+ data[i]['industry_faculty_name']+` </p>
+                                            <p class="col-sm-4"><b>Industry Faculty contact</b> :`+ data[i]['industry_faculty_contact']+` </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editindustryinteractions/`+data[i]['id']+`">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);
@@ -564,8 +564,8 @@
                                             <h4 class="col-sm-12"><b>`+ data[i]['title_of_lecture']+` </b></h4>
                                             <p class="col-sm-12"> <b>Title of Conference</b> :`+ data[i]['title_of_conference']+` </p>
                                             <p class="col-sm-4"><b>Organised by</b> :`+ data[i]['organised_by']+` </p>
-                                            <p class="col-sm-4"><b>Type</b> :`+ data[i]['international_national']+` </p>
-                                            <p class="col-sm-12 text-right"><a href="/staff/editinvitations/`+data[i]['id']+`">Edit</a><span style="margin: 0 5px;">|</span></p>
+                                            <p class="col-sm-4"><b>Type</b> :`+ data[i]['type_of_conference']+` </p>
+                                            <p class="col-sm-12 text-right"><a href="/staff/editinvitations/`+data[i]['id']+`">Edit</a><span style="margin: 0 5px;">|</span><a class="delete-post" data-id="` + data[i]['id'] + `">Delete</a></p>
                                         </div>
                                         <br>`;
                             $('#'+category+'-container').append(text);

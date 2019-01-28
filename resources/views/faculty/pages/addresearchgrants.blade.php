@@ -6,7 +6,7 @@
         {{csrf_field()}}
     <h1>RESEARCH GRANTS</h1>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5">
             <div class="form-group">
                 <label>Title Of Grant:</label>
                 <input type="text" name="title_of_grant" class ="form-control" placeholder = "Enter title of grant" required="required">
@@ -15,7 +15,7 @@
     </div>
     
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label>Agency:</label>
                 <input type="text" name="agency" class ="form-control" placeholder = "Agency" required="required">
@@ -24,17 +24,10 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <div class="form-group">
-                <label>Period From:</label>
-                <input type="date" name="period_from" class ="form-control" placeholder = "From date" required="required">
-            </div>             
-        </div>
-       
-        <div class="col-sm-2">
-            <div class="form-group">
-                <label>Period To:</label>
-                <input type="date" name="period_to" class ="form-control" placeholder = "To date" required="required">
+                <label>Grant Amount: (in Rs. lakhs)</label>
+                <input type="number" name="grant_amount" class ="form-control" placeholder = "Grant amount" min="0" step="any" required="required" id="amount">
             </div>             
         </div>
     </div>
@@ -42,8 +35,28 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
-                <label>Grant Amount:</label>
-                <input type="number" name="grant_amount" class ="form-control" placeholder = "Grant amount" required="required" id="amount">
+                <label>Academic Year:</label>
+                {{-- <input type="number" name="academic_year[]" class='form-control' required> --}}
+                <div class="row">
+                    <div class="col-sm-5">
+                        <select name="year[]" class="form-control" id="from-year" required>
+                            <option value="">From</option>
+                            @foreach($from_years as $from_year)
+                            <option value="{{ $from_year }}"> {{ $from_year }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <span class="col-sm-1">&#8211</span>
+                    <div class="col-sm-5">
+                        {{-- <select name="year[]" class="form-control" required>
+                            <option value="">To</option>
+                            @foreach($to_years as $to_year)
+                            <option value="{{ $to_year }}"> {{ $to_year }} </option>
+                            @endforeach
+                        </select> --}}
+                        <input type="text" class="form-control" name="year[]" id="to-year" readonly>
+                    </div>
+                </div>
             </div>             
         </div>
     </div>
@@ -51,11 +64,17 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
-                <label>Grant Year:</label>
-                <input type="year" class="form-control" placeholder="Year of Grant" name="grant_year" required="required">
+                <label>Duration / Period :</label>
+                <select name="period" class="form-control" required>
+                    <option value="">Select...</option>
+                    @foreach($period_types as $period_type)
+                    <option value="{{ $period_type }}"> {{ $period_type }} </option>
+                    @endforeach
+                </select>
             </div>             
         </div>
-    </div>   
+    </div>
+
     <div class="row">
         <div class="col-sm-4">
             <input type="submit" class="btn btn-primary" value="submit">
@@ -76,5 +95,12 @@ function validation(){
            return true;
        }
  }
+
+ $(document).ready(function() {
+    $('#from-year').on('change', function() {
+        value = $(this).val();
+        $('#to-year').val(parseInt(value)+1);
+    });
+ });
  </script>
  @endsection
